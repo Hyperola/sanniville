@@ -874,7 +874,7 @@ export default function Home() {
                   lineHeight: '1.7',
                   marginBottom: '16px'
                 }}>
-                  "{testimonial.quote}"
+                  {testimonial.quote}
                 </p>
                 <h3 style={{
                   fontSize: '20px',

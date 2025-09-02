@@ -43,22 +43,24 @@ export default function Leaders() {
       <Navbar />
       <main style={{
         maxWidth: '1280px',
+        width: '100%',
         margin: '0 auto',
-        padding: '32px 16px',
+        padding: 'clamp(16px, 5vw, 32px) clamp(8px, 3vw, 16px)',
         fontFamily: "'Merriweather', serif",
-        color: '#1F2937'
+        color: '#1F2937',
+        boxSizing: 'border-box',
       }}>
         {/* Hero Section */}
         <section style={{
           position: 'relative',
-          height: '600px',
-          marginBottom: '64px',
-          borderRadius: '12px',
+          height: 'clamp(400px, 60vw, 600px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
+          borderRadius: 'clamp(8px, 2vw, 12px)',
           overflow: 'hidden',
           boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
           backgroundImage: 'url(/images/leaders-hero.jpeg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
         }}>
           <div style={{
             position: 'absolute',
@@ -73,21 +75,21 @@ export default function Leaders() {
             alignItems: 'center',
             color: '#FFFFFF',
             textAlign: 'center',
-            padding: '32px'
+            padding: 'clamp(16px, 5vw, 32px)',
           }}>
             <h1 style={{
-              fontSize: '52px',
+              fontSize: 'clamp(28px, 6vw, 52px)',
               fontWeight: '700',
-              marginBottom: '20px',
-              letterSpacing: '1.5px'
+              marginBottom: 'clamp(10px, 2.5vw, 20px)',
+              letterSpacing: 'clamp(0.8px, 0.2vw, 1.5px)',
             }}>
               Our Visionary Leaders
             </h1>
             <p style={{
-              fontSize: '24px',
-              maxWidth: '800px',
-              marginBottom: '32px',
-              lineHeight: '1.6'
+              fontSize: 'clamp(16px, 4vw, 24px)',
+              maxWidth: 'min(90%, 800px)',
+              marginBottom: 'clamp(16px, 4vw, 32px)',
+              lineHeight: '1.6',
             }}>
               Meet the dedicated leaders of Sanniville Academy, driving excellence and innovation across our Lagos and Abuja campuses.
             </p>
@@ -96,12 +98,13 @@ export default function Leaders() {
               style={{
                 backgroundColor: '#D4A017',
                 color: '#1F2937',
-                padding: '16px 36px',
-                borderRadius: '8px',
+                padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 36px)',
+                borderRadius: 'clamp(6px, 1.5vw, 8px)',
                 textDecoration: 'none',
-                fontSize: '20px',
+                fontSize: 'clamp(16px, 4vw, 20px)',
                 fontWeight: '600',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                display: 'inline-block',
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#b58900';
@@ -119,27 +122,27 @@ export default function Leaders() {
 
         {/* Leadership Team */}
         <section style={{
-          padding: '64px 0',
+          padding: 'clamp(32px, 8vw, 64px) 0',
           backgroundColor: '#F9FAFB',
-          borderRadius: '12px',
-          marginBottom: '64px'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#4B5320',
-            marginBottom: '20px',
-            textAlign: 'center'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
+            textAlign: 'center',
           }}>
             Our Leadership Team
           </h2>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
             color: '#6B7280',
-            maxWidth: '800px',
-            margin: '0 auto 40px',
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(20px, 5vw, 40px)',
             lineHeight: '1.8',
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
             Our leaders bring decades of experience and a shared commitment to fostering academic excellence and personal growth.
           </p>
@@ -148,23 +151,32 @@ export default function Leaders() {
           <div style={{
             display: 'flex',
             justifyContent: 'center',
-            marginBottom: '48px',
-            borderBottom: '1px solid #E5E7EB'
+            marginBottom: 'clamp(24px, 6vw, 48px)',
+            borderBottom: '1px solid #E5E7EB',
+            gap: 'clamp(8px, 2vw, 16px)',
+            flexWrap: 'wrap',
           }}>
             {['lagos', 'abuja'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 style={{
-                  padding: '16px 32px',
+                  padding: 'clamp(10px, 2.5vw, 16px) clamp(20px, 5vw, 32px)',
                   backgroundColor: 'transparent',
                   border: 'none',
                   borderBottom: activeTab === tab ? '3px solid #D4A017' : '3px solid transparent',
+                  fontFamily: "'Merriweather', serif",
                   fontWeight: '600',
-                  fontSize: '18px',
+                  fontSize: 'clamp(14px, 3.5vw, 18px)',
                   color: activeTab === tab ? '#4B5320' : '#6B7280',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  if (activeTab !== tab) e.target.style.color = '#4B5320';
+                }}
+                onMouseLeave={(e) => {
+                  if (activeTab !== tab) e.target.style.color = '#6B7280';
                 }}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)} Campus
@@ -176,8 +188,8 @@ export default function Leaders() {
           {activeTab === 'lagos' && (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '32px'
+              gridTemplateColumns: `repeat(auto-fit, minmax(clamp(240px, 30vw, 320px), 1fr))`,
+              gap: 'clamp(16px, 4vw, 32px)',
             }}>
               {[
                 {
@@ -202,56 +214,58 @@ export default function Leaders() {
                   qualifications: 'MA Counseling, University of Lagos'
                 }
               ].map((leader, index) => (
-                <div key={index} style={{
-                  backgroundColor: '#FFFFFF',
-                  padding: '24px',
-                  borderRadius: '8px',
-                  boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
-                  transition: 'transform 0.3s ease',
-                  textAlign: 'center'
-                }}
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                <div
+                  key={index}
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    padding: 'clamp(16px, 4vw, 24px)',
+                    borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                    boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
+                    transition: 'transform 0.3s ease',
+                    textAlign: 'center',
+                  }}
+                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
+                  onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                 >
                   <img
                     src={leader.image}
                     alt={leader.name}
                     style={{
-                      width: '150px',
-                      height: '150px',
+                      width: 'clamp(120px, 20vw, 150px)',
+                      height: 'clamp(120px, 20vw, 150px)',
                       objectFit: 'cover',
                       borderRadius: '50%',
-                      margin: '0 auto 16px',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      margin: '0 auto clamp(8px, 2vw, 16px)',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                     }}
                   />
                   <h3 style={{
-                    fontSize: '22px',
+                    fontSize: 'clamp(18px, 4vw, 22px)',
                     fontWeight: '600',
                     color: '#4B5320',
-                    marginBottom: '8px'
+                    marginBottom: 'clamp(6px, 1.5vw, 8px)',
                   }}>
                     {leader.name}
                   </h3>
                   <p style={{
-                    fontSize: '18px',
+                    fontSize: 'clamp(14px, 3.5vw, 18px)',
                     color: '#D4A017',
-                    marginBottom: '12px'
+                    marginBottom: 'clamp(8px, 2vw, 12px)',
                   }}>
                     {leader.role}
                   </p>
                   <p style={{
-                    fontSize: '16px',
+                    fontSize: 'clamp(12px, 3vw, 16px)',
                     color: '#6B7280',
                     lineHeight: '1.7',
-                    marginBottom: '12px'
+                    marginBottom: 'clamp(8px, 2vw, 12px)',
                   }}>
                     {leader.bio}
                   </p>
                   <p style={{
-                    fontSize: '14px',
+                    fontSize: 'clamp(12px, 3vw, 14px)',
                     color: '#6B7280',
-                    fontStyle: 'italic'
+                    fontStyle: 'italic',
                   }}>
                     {leader.qualifications}
                   </p>
@@ -264,8 +278,8 @@ export default function Leaders() {
           {activeTab === 'abuja' && (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '32px'
+              gridTemplateColumns: `repeat(auto-fit, minmax(clamp(240px, 30vw, 320px), 1fr))`,
+              gap: 'clamp(16px, 4vw, 32px)',
             }}>
               {[
                 {
@@ -290,56 +304,58 @@ export default function Leaders() {
                   qualifications: 'MBA, University of Nigeria'
                 }
               ].map((leader, index) => (
-                <div key={index} style={{
-                  backgroundColor: '#FFFFFF',
-                  padding: '24px',
-                  borderRadius: '8px',
-                  boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
-                  transition: 'transform 0.3s ease',
-                  textAlign: 'center'
-                }}
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                <div
+                  key={index}
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    padding: 'clamp(16px, 4vw, 24px)',
+                    borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                    boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
+                    transition: 'transform 0.3s ease',
+                    textAlign: 'center',
+                  }}
+                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
+                  onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                 >
                   <img
                     src={leader.image}
                     alt={leader.name}
                     style={{
-                      width: '150px',
-                      height: '150px',
+                      width: 'clamp(120px, 20vw, 150px)',
+                      height: 'clamp(120px, 20vw, 150px)',
                       objectFit: 'cover',
                       borderRadius: '50%',
-                      margin: '0 auto 16px',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      margin: '0 auto clamp(8px, 2vw, 16px)',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                     }}
                   />
                   <h3 style={{
-                    fontSize: '22px',
+                    fontSize: 'clamp(18px, 4vw, 22px)',
                     fontWeight: '600',
                     color: '#4B5320',
-                    marginBottom: '8px'
+                    marginBottom: 'clamp(6px, 1.5vw, 8px)',
                   }}>
                     {leader.name}
                   </h3>
                   <p style={{
-                    fontSize: '18px',
+                    fontSize: 'clamp(14px, 3.5vw, 18px)',
                     color: '#D4A017',
-                    marginBottom: '12px'
+                    marginBottom: 'clamp(8px, 2vw, 12px)',
                   }}>
                     {leader.role}
                   </p>
                   <p style={{
-                    fontSize: '16px',
+                    fontSize: 'clamp(12px, 3vw, 16px)',
                     color: '#6B7280',
                     lineHeight: '1.7',
-                    marginBottom: '12px'
+                    marginBottom: 'clamp(8px, 2vw, 12px)',
                   }}>
                     {leader.bio}
                   </p>
                   <p style={{
-                    fontSize: '14px',
+                    fontSize: 'clamp(12px, 3vw, 14px)',
                     color: '#6B7280',
-                    fontStyle: 'italic'
+                    fontStyle: 'italic',
                   }}>
                     {leader.qualifications}
                   </p>
@@ -351,77 +367,75 @@ export default function Leaders() {
 
         {/* Testimonial Carousel */}
         <section style={{
-          padding: '64px 0',
+          padding: 'clamp(32px, 8vw, 64px) 0',
           backgroundColor: '#FFFFFF',
-          borderRadius: '12px',
-          marginBottom: '64px'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#4B5320',
-            marginBottom: '20px',
-            textAlign: 'center'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
+            textAlign: 'center',
           }}>
             From Our Leaders
           </h2>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
             color: '#6B7280',
-            maxWidth: '800px',
-            margin: '0 auto 40px',
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(20px, 5vw, 40px)',
             lineHeight: '1.8',
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
             Hear from our leadership team about their commitment to Sanniville’s mission.
           </p>
           <div style={{
-            maxWidth: '800px',
+            maxWidth: 'min(90%, 800px)',
             margin: '0 auto',
-            padding: '32px',
+            padding: 'clamp(16px, 4vw, 32px)',
             backgroundColor: '#F9FAFB',
-            borderRadius: '8px',
-            boxShadow: '0 6px 12px rgba(0,0,0,0.2)'
+            borderRadius: 'clamp(6px, 1.5vw, 8px)',
+            boxShadow: '0 6px 12px rgba(0,0,0,0.2)',
           }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '24px',
-              flexDirection: 'row'
-            }}
-            sx={{ '@media (maxWidth: 768px)': { flexDirection: 'column' } }}
-            >
+              gap: 'clamp(12px, 3vw, 24px)',
+              flexDirection: window.innerWidth > 768 ? 'row' : 'column',
+            }}>
               <img
                 src={testimonials[currentTestimonial].image}
                 alt={testimonials[currentTestimonial].name}
                 style={{
-                  width: '150px',
-                  height: '150px',
+                  width: 'clamp(100px, 20vw, 150px)',
+                  height: 'clamp(100px, 20vw, 150px)',
                   objectFit: 'cover',
                   borderRadius: '50%',
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                 }}
               />
               <div>
                 <p style={{
-                  fontSize: '18px',
+                  fontSize: 'clamp(14px, 3.5vw, 18px)',
                   color: '#1F2937',
                   lineHeight: '1.8',
-                  marginBottom: '16px',
-                  fontStyle: 'italic'
+                  marginBottom: 'clamp(8px, 2vw, 16px)',
+                  fontStyle: 'italic',
                 }}>
                   {testimonials[currentTestimonial].quote}
                 </p>
                 <p style={{
-                  fontSize: '20px',
+                  fontSize: 'clamp(16px, 4vw, 20px)',
                   fontWeight: '600',
-                  color: '#4B5320'
+                  color: '#4B5320',
                 }}>
                   {testimonials[currentTestimonial].name}
                 </p>
                 <p style={{
-                  fontSize: '16px',
-                  color: '#6B7280'
+                  fontSize: 'clamp(12px, 3vw, 16px)',
+                  color: '#6B7280',
                 }}>
                   {testimonials[currentTestimonial].role}
                 </p>
@@ -430,40 +444,46 @@ export default function Leaders() {
             <div style={{
               display: 'flex',
               justifyContent: 'center',
-              gap: '16px',
-              marginTop: '24px'
+              gap: 'clamp(8px, 2vw, 16px)',
+              marginTop: 'clamp(12px, 3vw, 24px)',
             }}>
               <button
                 onClick={prevTestimonial}
                 style={{
                   backgroundColor: '#D4A017',
                   color: '#1F2937',
-                  padding: '12px',
+                  padding: 'clamp(8px, 2vw, 12px)',
                   borderRadius: '50%',
                   border: 'none',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#b58900'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#D4A017'}
               >
-                <FiChevronLeft style={{ fontSize: '20px' }} />
+                <FiChevronLeft style={{ fontSize: 'clamp(16px, 4vw, 20px)' }} />
               </button>
               <button
                 onClick={nextTestimonial}
                 style={{
                   backgroundColor: '#D4A017',
                   color: '#1F2937',
-                  padding: '12px',
+                  padding: 'clamp(8px, 2vw, 12px)',
                   borderRadius: '50%',
                   border: 'none',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#b58900'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#D4A017'}
               >
-                <FiChevronRight style={{ fontSize: '20px' }} />
+                <FiChevronRight style={{ fontSize: 'clamp(16px, 4vw, 20px)' }} />
               </button>
             </div>
           </div>
@@ -472,24 +492,24 @@ export default function Leaders() {
         {/* CTA */}
         <section style={{
           textAlign: 'center',
-          padding: '64px',
+          padding: 'clamp(32px, 8vw, 64px)',
           backgroundColor: '#D4A017',
-          borderRadius: '12px',
+          borderRadius: 'clamp(8px, 2vw, 12px)',
           color: '#1F2937',
-          marginBottom: '64px'
+          marginBottom: 'clamp(32px, 8vw, 64px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
-            marginBottom: '20px'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
           }}>
             Connect with Our Leaders
           </h2>
           <p style={{
-            fontSize: '18px',
-            maxWidth: '800px',
-            margin: '0 auto 32px',
-            lineHeight: '1.8'
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(16px, 4vw, 32px)',
+            lineHeight: '1.8',
           }}>
             Reach out to learn more about our leadership team and their vision for Sanniville Academy.
           </p>
@@ -498,12 +518,13 @@ export default function Leaders() {
             style={{
               backgroundColor: '#1F2937',
               color: '#FFFFFF',
-              padding: '16px 36px',
-              borderRadius: '8px',
+              padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 36px)',
+              borderRadius: 'clamp(6px, 1.5vw, 8px)',
               textDecoration: 'none',
-              fontSize: '18px',
+              fontSize: 'clamp(14px, 3.5vw, 18px)',
               fontWeight: '600',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              display: 'inline-block',
             }}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = '#4B5320';

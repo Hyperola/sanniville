@@ -42,22 +42,24 @@ export default function SuccessStories() {
       <Navbar />
       <main style={{
         maxWidth: '1280px',
+        width: '100%',
         margin: '0 auto',
-        padding: '32px 16px',
+        padding: 'clamp(16px, 5vw, 32px) clamp(8px, 3vw, 16px)',
         fontFamily: "'Merriweather', serif",
-        color: '#1F2937'
+        color: '#1F2937',
+        boxSizing: 'border-box',
       }}>
         {/* Hero Section */}
         <section style={{
           position: 'relative',
-          height: '600px',
-          marginBottom: '64px',
-          borderRadius: '12px',
+          height: 'clamp(400px, 60vw, 600px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
+          borderRadius: 'clamp(8px, 2vw, 12px)',
           overflow: 'hidden',
           boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
           backgroundImage: 'url(/images/success.jpg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
         }}>
           <div style={{
             position: 'absolute',
@@ -72,21 +74,21 @@ export default function SuccessStories() {
             alignItems: 'center',
             color: '#FFFFFF',
             textAlign: 'center',
-            padding: '32px'
+            padding: 'clamp(16px, 5vw, 32px)',
           }}>
             <h1 style={{
-              fontSize: '52px',
+              fontSize: 'clamp(28px, 6vw, 52px)',
               fontWeight: '700',
-              marginBottom: '20px',
-              letterSpacing: '1.5px'
+              marginBottom: 'clamp(10px, 2.5vw, 20px)',
+              letterSpacing: 'clamp(0.8px, 0.2vw, 1.5px)',
             }}>
               Inspiring Success Stories
             </h1>
             <p style={{
-              fontSize: '24px',
-              maxWidth: '800px',
-              marginBottom: '32px',
-              lineHeight: '1.6'
+              fontSize: 'clamp(16px, 4vw, 24px)',
+              maxWidth: 'min(90%, 800px)',
+              marginBottom: 'clamp(16px, 4vw, 32px)',
+              lineHeight: '1.6',
             }}>
               Discover how Sanniville Academy’s alumni are transforming the world through leadership, innovation, and impact.
             </p>
@@ -95,12 +97,13 @@ export default function SuccessStories() {
               style={{
                 backgroundColor: '#D4A017',
                 color: '#1F2937',
-                padding: '16px 36px',
-                borderRadius: '8px',
+                padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 36px)',
+                borderRadius: 'clamp(6px, 1.5vw, 8px)',
                 textDecoration: 'none',
-                fontSize: '20px',
+                fontSize: 'clamp(16px, 4vw, 20px)',
                 fontWeight: '600',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                display: 'inline-block',
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#b58900';
@@ -118,34 +121,34 @@ export default function SuccessStories() {
 
         {/* Alumni Achievements */}
         <section style={{
-          padding: '64px 0',
+          padding: 'clamp(32px, 8vw, 64px) 0',
           backgroundColor: '#F9FAFB',
-          borderRadius: '12px',
-          marginBottom: '64px'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#4B5320',
-            marginBottom: '20px',
-            textAlign: 'center'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
+            textAlign: 'center',
           }}>
             Our Alumni Achievements
           </h2>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
             color: '#6B7280',
-            maxWidth: '900px',
-            margin: '0 auto 40px',
+            maxWidth: 'min(90%, 900px)',
+            margin: '0 auto clamp(20px, 5vw, 40px)',
             lineHeight: '1.8',
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
             Sanniville Academy’s alumni are global leaders, innovators, and change-makers. From securing scholarships at top universities to founding impactful ventures, their stories reflect our commitment to excellence.
           </p>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '32px'
+            gridTemplateColumns: `repeat(auto-fit, minmax(clamp(240px, 30vw, 320px), 1fr))`,
+            gap: 'clamp(16px, 4vw, 32px)',
           }}>
             {[
               { 
@@ -177,49 +180,55 @@ export default function SuccessStories() {
                 caption: 'Tolu on a medical mission'
               }
             ].map((alumnus, index) => (
-              <div key={index} style={{
-                backgroundColor: '#FFFFFF',
-                padding: '24px',
-                borderRadius: '8px',
-                boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
-                transition: 'transform 0.3s ease',
-                textAlign: 'center'
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+              <div
+                key={index}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  padding: 'clamp(16px, 4vw, 24px)',
+                  borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                  boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
+                  transition: 'transform 0.3s ease',
+                  textAlign: 'center',
+                }}
+                onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
+                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
               >
                 <img
                   src={alumnus.image}
                   alt={alumnus.name}
                   style={{
                     width: '100%',
-                    height: '220px',
+                    height: 'clamp(150px, 35vw, 220px)',
                     objectFit: 'cover',
-                    borderRadius: '8px',
-                    marginBottom: '16px',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                    borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                    marginBottom: 'clamp(8px, 2vw, 16px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                   }}
                 />
                 <h3 style={{
-                  fontSize: '22px',
+                  fontSize: 'clamp(18px, 4vw, 22px)',
                   fontWeight: '600',
                   color: '#4B5320',
-                  marginBottom: '8px'
+                  marginBottom: 'clamp(6px, 1.5vw, 8px)',
                 }}>
-                  {alumnus.name} <span style={{ fontSize: '16px', fontWeight: '400', color: '#6B7280' }}>({alumnus.year})</span>
+                  {alumnus.name} <span style={{
+                    fontSize: 'clamp(12px, 3vw, 16px)',
+                    fontWeight: '400',
+                    color: '#6B7280',
+                  }}>({alumnus.year})</span>
                 </h3>
                 <p style={{
-                  fontSize: '16px',
+                  fontSize: 'clamp(12px, 3vw, 16px)',
                   color: '#6B7280',
                   lineHeight: '1.7',
-                  marginBottom: '12px'
+                  marginBottom: 'clamp(8px, 2vw, 12px)',
                 }}>
                   {alumnus.story}
                 </p>
                 <p style={{
-                  fontSize: '14px',
+                  fontSize: 'clamp(12px, 3vw, 14px)',
                   color: '#6B7280',
-                  fontStyle: 'italic'
+                  fontStyle: 'italic',
                 }}>
                   {alumnus.caption}
                 </p>
@@ -230,35 +239,35 @@ export default function SuccessStories() {
 
         {/* Stats Section */}
         <section style={{
-          padding: '64px 0',
+          padding: 'clamp(32px, 8vw, 64px) 0',
           backgroundColor: '#FFFFFF',
-          borderRadius: '12px',
-          marginBottom: '64px',
-          textAlign: 'center'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
+          textAlign: 'center',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#4B5320',
-            marginBottom: '20px'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
           }}>
             Impact by the Numbers
           </h2>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
             color: '#6B7280',
-            maxWidth: '800px',
-            margin: '0 auto 40px',
-            lineHeight: '1.8'
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(20px, 5vw, 40px)',
+            lineHeight: '1.8',
           }}>
             Our alumni’s achievements reflect Sanniville’s transformative education.
           </p>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '24px',
-            maxWidth: '1000px',
-            margin: '0 auto'
+            gridTemplateColumns: `repeat(auto-fit, minmax(clamp(160px, 25vw, 200px), 1fr))`,
+            gap: 'clamp(12px, 3vw, 24px)',
+            maxWidth: 'min(90%, 1000px)',
+            margin: '0 auto',
           }}>
             {[
               { stat: '500+', description: 'Alumni in Top Global Universities' },
@@ -266,27 +275,29 @@ export default function SuccessStories() {
               { stat: '30+', description: 'Startups Founded by Alumni' },
               { stat: '10+', description: 'Rhodes & Fulbright Scholars' }
             ].map((item, index) => (
-              <div key={index} style={{
-                padding: '24px',
-                backgroundColor: '#F9FAFB',
-                borderRadius: '8px',
-                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+              <div
+                key={index}
+                style={{
+                  padding: 'clamp(16px, 4vw, 24px)',
+                  backgroundColor: '#F9FAFB',
+                  borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                  transition: 'transform 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
               >
                 <h3 style={{
-                  fontSize: '28px',
+                  fontSize: 'clamp(20px, 5vw, 28px)',
                   fontWeight: '700',
                   color: '#D4A017',
-                  marginBottom: '8px'
+                  marginBottom: 'clamp(6px, 1.5vw, 8px)',
                 }}>
                   {item.stat}
                 </h3>
                 <p style={{
-                  fontSize: '16px',
-                  color: '#6B7280'
+                  fontSize: 'clamp(12px, 3vw, 16px)',
+                  color: '#6B7280',
                 }}>
                   {item.description}
                 </p>
@@ -297,13 +308,13 @@ export default function SuccessStories() {
 
         {/* Testimonial Carousel */}
         <section style={{
-          padding: '64px 0',
+          padding: 'clamp(32px, 8vw, 64px) 0',
           backgroundImage: 'url(/images/testimonial-bg.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          borderRadius: '12px',
-          marginBottom: '64px',
-          position: 'relative'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
+          position: 'relative',
         }}>
           <div style={{
             position: 'absolute',
@@ -311,100 +322,112 @@ export default function SuccessStories() {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(75, 83, 32, 0.7)'
+            backgroundColor: 'rgba(75, 83, 32, 0.7)',
           }}></div>
-          <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+          <div style={{
+            position: 'relative',
+            zIndex: 1,
+            textAlign: 'center',
+          }}>
             <h2 style={{
-              fontSize: '36px',
+              fontSize: 'clamp(24px, 5vw, 36px)',
               fontWeight: '700',
               color: '#FFFFFF',
-              marginBottom: '20px'
+              marginBottom: 'clamp(10px, 2.5vw, 20px)',
             }}>
               Voices of Our Alumni
             </h2>
             <div style={{
-              maxWidth: '800px',
+              maxWidth: 'min(90%, 800px)',
               margin: '0 auto',
-              padding: '32px',
+              padding: 'clamp(16px, 4vw, 32px)',
               backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              borderRadius: '8px',
-              boxShadow: '0 6px 12px rgba(0,0,0,0.2)'
+              borderRadius: 'clamp(6px, 1.5vw, 8px)',
+              boxShadow: '0 6px 12px rgba(0,0,0,0.2)',
             }}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '24px',
-                flexDirection: 'row'
-              }}
-              sx={{ '@media (maxWidth: 768px)': { flexDirection: 'column' } }}
-              >
+                gap: 'clamp(12px, 3vw, 24px)',
+                flexDirection: window.innerWidth > 768 ? 'row' : 'column',
+              }}>
                 <img
                   src={testimonials[currentTestimonial].image}
                   alt={testimonials[currentTestimonial].name}
                   style={{
-                    width: '150px',
-                    height: '150px',
+                    width: 'clamp(100px, 20vw, 150px)',
+                    height: 'clamp(100px, 20vw, 150px)',
                     objectFit: 'cover',
                     borderRadius: '50%',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                   }}
                 />
                 <div>
                   <p style={{
-                    fontSize: '18px',
+                    fontSize: 'clamp(14px, 3.5vw, 18px)',
                     color: '#1F2937',
                     lineHeight: '1.8',
-                    marginBottom: '16px',
-                    fontStyle: 'italic'
+                    marginBottom: 'clamp(8px, 2vw, 16px)',
+                    fontStyle: 'italic',
                   }}>
                     {testimonials[currentTestimonial].quote}
                   </p>
                   <p style={{
-                    fontSize: '20px',
+                    fontSize: 'clamp(16px, 4vw, 20px)',
                     fontWeight: '600',
-                    color: '#4B5320'
+                    color: '#4B5320',
                   }}>
-                    {testimonials[currentTestimonial].name} <span style={{ fontSize: '16px', fontWeight: '400', color: '#6B7280' }}>({testimonials[currentTestimonial].year})</span>
+                    {testimonials[currentTestimonial].name} <span style={{
+                      fontSize: 'clamp(12px, 3vw, 16px)',
+                      fontWeight: '400',
+                      color: '#6B7280',
+                    }}>({testimonials[currentTestimonial].year})</span>
                   </p>
                 </div>
               </div>
               <div style={{
                 display: 'flex',
                 justifyContent: 'center',
-                gap: '16px',
-                marginTop: '24px'
+                gap: 'clamp(8px, 2vw, 16px)',
+                marginTop: 'clamp(12px, 3vw, 24px)',
               }}>
                 <button
                   onClick={prevTestimonial}
                   style={{
                     backgroundColor: '#D4A017',
                     color: '#1F2937',
-                    padding: '12px',
+                    padding: 'clamp(8px, 2vw, 12px)',
                     borderRadius: '50%',
                     border: 'none',
                     cursor: 'pointer',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                   onMouseEnter={(e) => e.target.style.backgroundColor = '#b58900'}
                   onMouseLeave={(e) => e.target.style.backgroundColor = '#D4A017'}
                 >
-                  <FiChevronLeft style={{ fontSize: '20px' }} />
+                  <FiChevronLeft style={{ fontSize: 'clamp(16px, 4vw, 20px)' }} />
                 </button>
                 <button
                   onClick={nextTestimonial}
                   style={{
                     backgroundColor: '#D4A017',
                     color: '#1F2937',
-                    padding: '12px',
+                    padding: 'clamp(8px, 2vw, 12px)',
                     borderRadius: '50%',
                     border: 'none',
                     cursor: 'pointer',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                   onMouseEnter={(e) => e.target.style.backgroundColor = '#b58900'}
                   onMouseLeave={(e) => e.target.style.backgroundColor = '#D4A017'}
                 >
-                  <FiChevronRight style={{ fontSize: '20px' }} />
+                  <FiChevronRight style={{ fontSize: 'clamp(16px, 4vw, 20px)' }} />
                 </button>
               </div>
             </div>
@@ -413,34 +436,34 @@ export default function SuccessStories() {
 
         {/* Photo Gallery */}
         <section style={{
-          padding: '64px 0',
+          padding: 'clamp(32px, 8vw, 64px) 0',
           backgroundColor: '#FFFFFF',
-          borderRadius: '12px',
-          marginBottom: '64px'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#4B5320',
-            marginBottom: '20px',
-            textAlign: 'center'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
+            textAlign: 'center',
           }}>
             Moments of Triumph
           </h2>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
             color: '#6B7280',
-            maxWidth: '800px',
-            margin: '0 auto 40px',
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(20px, 5vw, 40px)',
             lineHeight: '1.8',
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
             Celebrate the achievements of our alumni through these defining moments.
           </p>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px'
+            gridTemplateColumns: `repeat(auto-fit, minmax(clamp(200px, 30vw, 280px), 1fr))`,
+            gap: 'clamp(12px, 3vw, 24px)',
           }}>
             {[
               { image: '/images/student1.jpg', alt: 'Ada’s MIT scholarship ceremony', caption: 'Ada Obi’s MIT scholarship award, 2018' },
@@ -448,29 +471,31 @@ export default function SuccessStories() {
               { image: '/images/student3.jpg', alt: 'Funmi’s Rhodes Scholar event', caption: 'Funmi Ade at Oxford, 2020' },
               { image: '/images/leader-uzo.jpg', alt: 'Tolu’s medical mission', caption: 'Tolu Akins’ medical outreach, 2023' }
             ].map((item, index) => (
-              <div key={index} style={{
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+              <div
+                key={index}
+                style={{
+                  transition: 'transform 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
               >
                 <img
                   src={item.image}
                   alt={item.alt}
                   style={{
                     width: '100%',
-                    height: '200px',
+                    height: 'clamp(150px, 25vw, 200px)',
                     objectFit: 'cover',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                    borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                   }}
                 />
                 <p style={{
-                  fontSize: '14px',
+                  fontSize: 'clamp(12px, 3vw, 14px)',
                   color: '#6B7280',
                   textAlign: 'center',
-                  marginTop: '8px',
-                  fontStyle: 'italic'
+                  marginTop: 'clamp(6px, 1.5vw, 8px)',
+                  fontStyle: 'italic',
                 }}>
                   {item.caption}
                 </p>
@@ -482,45 +507,47 @@ export default function SuccessStories() {
         {/* CTA */}
         <section style={{
           textAlign: 'center',
-          padding: '64px',
+          padding: 'clamp(32px, 8vw, 64px)',
           backgroundColor: '#D4A017',
-          borderRadius: '12px',
+          borderRadius: 'clamp(8px, 2vw, 12px)',
           color: '#1F2937',
-          marginBottom: '64px'
+          marginBottom: 'clamp(32px, 8vw, 64px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
-            marginBottom: '20px'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
           }}>
             Be Our Next Success Story
           </h2>
           <p style={{
-            fontSize: '18px',
-            maxWidth: '800px',
-            margin: '0 auto 32px',
-            lineHeight: '1.8'
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(16px, 4vw, 32px)',
+            lineHeight: '1.8',
           }}>
             Join Sanniville Academy and unlock your potential to become a global leader, innovator, or change-maker.
           </p>
           <div style={{
             display: 'flex',
-            gap: '20px',
-            justifyContent: 'center'
-          }}
-          sx={{ '@media (maxWidth: 768px)': { flexDirection: 'column', alignItems: 'center' } }}
-          >
+            flexDirection: window.innerWidth > 768 ? 'row' : 'column',
+            gap: 'clamp(12px, 3vw, 20px)',
+            justifyContent: 'center',
+            alignItems: window.innerWidth > 768 ? 'center' : 'stretch',
+          }}>
             <Link
               href="/admissions/apply"
               style={{
                 backgroundColor: '#1F2937',
                 color: '#FFFFFF',
-                padding: '16px 36px',
-                borderRadius: '8px',
+                padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 36px)',
+                borderRadius: 'clamp(6px, 1.5vw, 8px)',
                 textDecoration: 'none',
-                fontSize: '18px',
+                fontSize: 'clamp(14px, 3.5vw, 18px)',
                 fontWeight: '600',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                display: 'inline-block',
+                textAlign: 'center',
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#4B5320';
@@ -538,13 +565,15 @@ export default function SuccessStories() {
               style={{
                 backgroundColor: 'transparent',
                 color: '#1F2937',
-                padding: '16px 36px',
+                padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 36px)',
                 border: '2px solid #1F2937',
-                borderRadius: '8px',
+                borderRadius: 'clamp(6px, 1.5vw, 8px)',
                 textDecoration: 'none',
-                fontSize: '18px',
+                fontSize: 'clamp(14px, 3.5vw, 18px)',
                 fontWeight: '600',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                display: 'inline-block',
+                textAlign: 'center',
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#1F2937';

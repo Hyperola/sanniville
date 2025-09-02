@@ -9,22 +9,24 @@ export default function History() {
       <Navbar />
       <main style={{
         maxWidth: '1280px',
+        width: '100%',
         margin: '0 auto',
-        padding: '32px 16px',
+        padding: 'clamp(16px, 5vw, 32px) clamp(8px, 3vw, 16px)',
         fontFamily: "'Merriweather', serif",
-        color: '#1F2937'
+        color: '#1F2937',
+        boxSizing: 'border-box',
       }}>
         {/* Hero Section */}
         <section style={{
           position: 'relative',
-          height: '600px',
-          marginBottom: '64px',
-          borderRadius: '12px',
+          height: 'clamp(400px, 60vw, 600px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
+          borderRadius: 'clamp(8px, 2vw, 12px)',
           overflow: 'hidden',
           boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
           backgroundImage: 'url(/images/history-hero.jpeg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
         }}>
           <div style={{
             position: 'absolute',
@@ -39,21 +41,21 @@ export default function History() {
             alignItems: 'center',
             color: '#FFFFFF',
             textAlign: 'center',
-            padding: '32px'
+            padding: 'clamp(16px, 5vw, 32px)',
           }}>
             <h1 style={{
-              fontSize: '52px',
+              fontSize: 'clamp(28px, 6vw, 52px)',
               fontWeight: '700',
-              marginBottom: '20px',
-              letterSpacing: '1.5px'
+              marginBottom: 'clamp(10px, 2.5vw, 20px)',
+              letterSpacing: 'clamp(0.8px, 0.2vw, 1.5px)',
             }}>
               Our Storied Legacy
             </h1>
             <p style={{
-              fontSize: '24px',
-              maxWidth: '800px',
-              marginBottom: '32px',
-              lineHeight: '1.6'
+              fontSize: 'clamp(16px, 4vw, 24px)',
+              maxWidth: 'min(90%, 800px)',
+              marginBottom: 'clamp(16px, 4vw, 32px)',
+              lineHeight: '1.6',
             }}>
               Since 2005, Sanniville Academy has been a beacon of educational excellence, shaping leaders and innovators across Nigeria.
             </p>
@@ -62,12 +64,13 @@ export default function History() {
               style={{
                 backgroundColor: '#D4A017',
                 color: '#1F2937',
-                padding: '16px 36px',
-                borderRadius: '8px',
+                padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 36px)',
+                borderRadius: 'clamp(6px, 1.5vw, 8px)',
                 textDecoration: 'none',
-                fontSize: '20px',
+                fontSize: 'clamp(16px, 4vw, 20px)',
                 fontWeight: '600',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                display: 'inline-block',
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#b58900';
@@ -85,26 +88,26 @@ export default function History() {
 
         {/* History Overview */}
         <section style={{
-          padding: '64px 0',
+          padding: 'clamp(32px, 8vw, 64px) 0',
           backgroundColor: '#F9FAFB',
-          borderRadius: '12px',
-          marginBottom: '64px',
-          textAlign: 'center'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
+          textAlign: 'center',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#4B5320',
-            marginBottom: '20px'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
           }}>
             A Vision Rooted in Excellence
           </h2>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
             color: '#6B7280',
-            maxWidth: '900px',
-            margin: '0 auto 32px',
-            lineHeight: '1.8'
+            maxWidth: 'min(90%, 900px)',
+            margin: '0 auto clamp(16px, 4vw, 32px)',
+            lineHeight: '1.8',
           }}>
             Founded in 2005 by Dr. John Sanni, a renowned educator and philanthropist, Sanniville Academy was established to redefine education in Nigeria. Starting with a single campus in Lagos and 50 pioneering students, the academy has grown to serve over 1,200 students across Lagos and Abuja, earning accolades such as the 2015 National Education Excellence Award and a consistent 95%+ WAEC pass rate since 2013. Our commitment to holistic education—blending academic rigor, leadership, and community service—has made us a cornerstone of Nigerian education.
           </p>
@@ -112,53 +115,51 @@ export default function History() {
 
         {/* Founder Section */}
         <section style={{
-          padding: '64px 0',
-          marginBottom: '64px',
+          padding: 'clamp(32px, 8vw, 64px) 0',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
           display: 'flex',
-          flexDirection: 'row',
-          gap: '32px',
+          flexDirection: window.innerWidth > 768 ? 'row' : 'column',
+          gap: 'clamp(16px, 4vw, 32px)',
           alignItems: 'center',
           backgroundColor: '#FFFFFF',
-          borderRadius: '12px',
-          boxShadow: '0 6px 12px rgba(0,0,0,0.1)'
-        }}
-        sx={{ '@media (maxWidth: 768px)': { flexDirection: 'column' } }}
-        >
+          borderRadius: 'clamp(8px, 2vw, 12px)',
+          boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
+        }}>
           <img
             src="/images/founder.jpg"
             alt="Dr. John Sanni"
             style={{
-              width: '300px',
-              height: '300px',
+              width: window.innerWidth > 768 ? 'clamp(200px, 25vw, 300px)' : '100%',
+              height: window.innerWidth > 768 ? 'clamp(200px, 25vw, 300px)' : 'clamp(180px, 45vw, 250px)',
               objectFit: 'cover',
-              borderRadius: '12px',
+              borderRadius: 'clamp(8px, 2vw, 12px)',
               boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-              transition: 'transform 0.3s ease'
+              transition: 'transform 0.3s ease',
             }}
             onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
             onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
           />
           <div>
             <h2 style={{
-              fontSize: '36px',
+              fontSize: 'clamp(24px, 5vw, 36px)',
               fontWeight: '700',
               color: '#4B5320',
-              marginBottom: '16px'
+              marginBottom: 'clamp(8px, 2vw, 16px)',
             }}>
               Our Founder’s Vision
             </h2>
             <p style={{
-              fontSize: '18px',
+              fontSize: 'clamp(14px, 3.5vw, 18px)',
               color: '#6B7280',
               lineHeight: '1.8',
-              marginBottom: '16px'
+              marginBottom: 'clamp(8px, 2vw, 16px)',
             }}>
               Dr. John Sanni, a visionary educator with a Ph.D. in Educational Leadership from the University of Ibadan, founded Sanniville Academy to empower young minds. Inspired by his own journey through Nigeria’s education system, he sought to create an institution that nurtures critical thinking, ethical leadership, and global citizenship. His legacy continues to guide our mission.
             </p>
             <p style={{
-              fontSize: '16px',
+              fontSize: 'clamp(12px, 3vw, 16px)',
               color: '#6B7280',
-              fontStyle: 'italic'
+              fontStyle: 'italic',
             }}>
               “Education is not just about knowledge; it’s about building character and inspiring change.” — Dr. John Sanni
             </p>
@@ -167,35 +168,35 @@ export default function History() {
 
         {/* Timeline */}
         <section style={{
-          padding: '64px 0',
-          marginBottom: '64px',
+          padding: 'clamp(32px, 8vw, 64px) 0',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
           backgroundColor: '#F9FAFB',
-          borderRadius: '12px'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#4B5320',
-            marginBottom: '20px',
-            textAlign: 'center'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
+            textAlign: 'center',
           }}>
             Milestones Through Time
           </h2>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
             color: '#6B7280',
-            maxWidth: '800px',
-            margin: '0 auto 40px',
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(20px, 5vw, 40px)',
             lineHeight: '1.8',
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
             From our humble beginnings to becoming a leader in Nigerian education, explore the key moments that define Sanniville Academy’s journey.
           </p>
           <div style={{
             display: 'grid',
-            gap: '32px',
-            maxWidth: '1000px',
-            margin: '0 auto'
+            gap: 'clamp(16px, 4vw, 32px)',
+            maxWidth: 'min(90%, 1000px)',
+            margin: '0 auto',
           }}>
             {[
               { 
@@ -229,56 +230,60 @@ export default function History() {
                 caption: 'Innovation lab ribbon-cutting'
               }
             ].map((milestone, index) => (
-              <div key={index} style={{
-                display: 'flex',
-                flexDirection: index % 2 === 0 ? 'row' : 'row-reverse',
-                gap: '32px',
-                alignItems: 'center',
-                backgroundColor: '#FFFFFF',
-                padding: '24px',
-                borderRadius: '8px',
-                boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-              sx={{ '@media (maxWidth: 768px)': { flexDirection: 'column' } }}
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  flexDirection: window.innerWidth > 768 ? (index % 2 === 0 ? 'row' : 'row-reverse') : 'column',
+                  gap: 'clamp(16px, 4vw, 32px)',
+                  alignItems: 'center',
+                  backgroundColor: '#FFFFFF',
+                  padding: 'clamp(12px, 3vw, 24px)',
+                  borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                  boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
+                  transition: 'transform 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
+                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
               >
-                <div style={{ flex: '0 0 250px' }}>
+                <div style={{
+                  flex: window.innerWidth > 768 ? '0 0 clamp(200px, 25vw, 250px)' : '0 0 auto',
+                  width: window.innerWidth > 768 ? 'clamp(200px, 25vw, 250px)' : '100%',
+                }}>
                   <img
                     src={milestone.image}
                     alt={`Milestone ${milestone.year}`}
                     style={{
                       width: '100%',
-                      height: '180px',
+                      height: 'clamp(120px, 30vw, 180px)',
                       objectFit: 'cover',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                     }}
                   />
                   <p style={{
-                    fontSize: '14px',
+                    fontSize: 'clamp(12px, 3vw, 14px)',
                     color: '#6B7280',
                     textAlign: 'center',
-                    marginTop: '8px',
-                    fontStyle: 'italic'
+                    marginTop: 'clamp(6px, 1.5vw, 8px)',
+                    fontStyle: 'italic',
                   }}>
                     {milestone.caption}
                   </p>
                 </div>
                 <div>
                   <h3 style={{
-                    fontSize: '26px',
+                    fontSize: 'clamp(20px, 5vw, 26px)',
                     fontWeight: '600',
                     color: '#4B5320',
-                    marginBottom: '12px'
+                    marginBottom: 'clamp(8px, 2vw, 12px)',
                   }}>
                     {milestone.year}
                   </h3>
                   <p style={{
-                    fontSize: '16px',
+                    fontSize: 'clamp(12px, 3vw, 16px)',
                     color: '#6B7280',
-                    lineHeight: '1.7'
+                    lineHeight: '1.7',
                   }}>
                     {milestone.event}
                   </p>
@@ -290,34 +295,34 @@ export default function History() {
 
         {/* Photo Gallery */}
         <section style={{
-          padding: '64px 0',
-          marginBottom: '64px',
+          padding: 'clamp(32px, 8vw, 64px) 0',
+          marginBottom: 'clamp(32px, 8vw, 64px)',
           backgroundColor: '#FFFFFF',
-          borderRadius: '12px'
+          borderRadius: 'clamp(8px, 2vw, 12px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#4B5320',
-            marginBottom: '20px',
-            textAlign: 'center'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
+            textAlign: 'center',
           }}>
             Historical Moments
           </h2>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
             color: '#6B7280',
-            maxWidth: '800px',
-            margin: '0 auto 40px',
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(20px, 5vw, 40px)',
             lineHeight: '1.8',
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
             Relive the defining moments of Sanniville Academy through our curated photo gallery.
           </p>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px'
+            gridTemplateColumns: `repeat(auto-fit, minmax(clamp(200px, 30vw, 280px), 1fr))`,
+            gap: 'clamp(16px, 4vw, 24px)',
           }}>
             {[
               { image: '/images/gallery-1.jpeg', alt: 'Early classroom, 2005', caption: 'First classroom setup in Lagos' },
@@ -325,29 +330,31 @@ export default function History() {
               { image: '/images/gallery-3.jpeg', alt: 'Community outreach, 2012', caption: 'Community service in Lagos' },
               { image: '/images/gallery-4.jpeg', alt: 'Campus expansion, 2018', caption: 'New library opening' }
             ].map((item, index) => (
-              <div key={index} style={{
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+              <div
+                key={index}
+                style={{
+                  transition: 'transform 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
               >
                 <img
                   src={item.image}
                   alt={item.alt}
                   style={{
                     width: '100%',
-                    height: '200px',
+                    height: 'clamp(150px, 25vw, 200px)',
                     objectFit: 'cover',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                    borderRadius: 'clamp(6px, 1.5vw, 8px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                   }}
                 />
                 <p style={{
-                  fontSize: '14px',
+                  fontSize: 'clamp(12px, 3vw, 14px)',
                   color: '#6B7280',
                   textAlign: 'center',
-                  marginTop: '8px',
-                  fontStyle: 'italic'
+                  marginTop: 'clamp(6px, 1.5vw, 8px)',
+                  fontStyle: 'italic',
                 }}>
                   {item.caption}
                 </p>
@@ -359,45 +366,47 @@ export default function History() {
         {/* CTA */}
         <section style={{
           textAlign: 'center',
-          padding: '64px',
+          padding: 'clamp(32px, 8vw, 64px)',
           backgroundColor: '#D4A017',
-          borderRadius: '12px',
+          borderRadius: 'clamp(8px, 2vw, 12px)',
           color: '#1F2937',
-          marginBottom: '64px'
+          marginBottom: 'clamp(32px, 8vw, 64px)',
         }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
-            marginBottom: '20px'
+            marginBottom: 'clamp(10px, 2.5vw, 20px)',
           }}>
             Become Part of Our Legacy
           </h2>
           <p style={{
-            fontSize: '18px',
-            maxWidth: '800px',
-            margin: '0 auto 32px',
-            lineHeight: '1.8'
+            fontSize: 'clamp(14px, 3.5vw, 18px)',
+            maxWidth: 'min(90%, 800px)',
+            margin: '0 auto clamp(16px, 4vw, 32px)',
+            lineHeight: '1.8',
           }}>
             Join Sanniville Academy and contribute to a legacy of excellence, leadership, and community impact. Apply today to start your journey with us.
           </p>
           <div style={{
             display: 'flex',
-            gap: '20px',
-            justifyContent: 'center'
-          }}
-          sx={{ '@media (maxWidth: 768px)': { flexDirection: 'column', alignItems: 'center' } }}
-          >
+            flexDirection: window.innerWidth > 768 ? 'row' : 'column',
+            gap: 'clamp(12px, 3vw, 20px)',
+            justifyContent: 'center',
+            alignItems: window.innerWidth > 768 ? 'center' : 'stretch',
+          }}>
             <Link
               href="/admissions/apply"
               style={{
                 backgroundColor: '#1F2937',
                 color: '#FFFFFF',
-                padding: '16px 36px',
-                borderRadius: '8px',
+                padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 36px)',
+                borderRadius: 'clamp(6px, 1.5vw, 8px)',
                 textDecoration: 'none',
-                fontSize: '18px',
+                fontSize: 'clamp(14px, 3.5vw, 18px)',
                 fontWeight: '600',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                display: 'inline-block',
+                textAlign: 'center',
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#4B5320';
@@ -415,13 +424,15 @@ export default function History() {
               style={{
                 backgroundColor: 'transparent',
                 color: '#1F2937',
-                padding: '16px 36px',
+                padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 36px)',
                 border: '2px solid #1F2937',
-                borderRadius: '8px',
+                borderRadius: 'clamp(6px, 1.5vw, 8px)',
                 textDecoration: 'none',
-                fontSize: '18px',
+                fontSize: 'clamp(14px, 3.5vw, 18px)',
                 fontWeight: '600',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                display: 'inline-block',
+                textAlign: 'center',
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#1F2937';

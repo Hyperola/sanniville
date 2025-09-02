@@ -2,12 +2,30 @@
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiChevronDown, FiExternalLink, FiAward, FiUsers, FiGlobe, FiBookOpen } from 'react-icons/fi';
 
 export default function Accreditation() {
   const [activeTab, setActiveTab] = useState('accreditations');
   const [expandedCard, setExpandedCard] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Set initial value
+    checkIsMobile();
+    
+    // Add event listener
+    window.addEventListener('resize', checkIsMobile);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
 
   const toggleExpand = (index) => {
     setExpandedCard(expandedCard === index ? null : index);
@@ -20,8 +38,8 @@ export default function Accreditation() {
       {/* Hero Section */}
       <section style={{
         position: 'relative',
-        height: '500px',
-        marginBottom: '64px',
+        height: isMobile ? '400px' : '500px',
+        marginBottom: isMobile ? '48px' : '64px',
         overflow: 'hidden',
         backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(/images/accreditation-hero.jpeg)',
         backgroundSize: 'cover',
@@ -35,7 +53,7 @@ export default function Accreditation() {
       }}>
         <div style={{ maxWidth: '900px' }}>
           <h1 style={{
-            fontSize: '3.5rem',
+            fontSize: isMobile ? '2.2rem' : '3.5rem',
             fontWeight: '700',
             marginBottom: '1.5rem',
             letterSpacing: '1.2px'
@@ -43,7 +61,7 @@ export default function Accreditation() {
             Accreditation & Affiliations
           </h1>
           <p style={{
-            fontSize: '1.5rem',
+            fontSize: isMobile ? '1.1rem' : '1.5rem',
             marginBottom: '2rem',
             lineHeight: '1.6'
           }}>
@@ -51,25 +69,28 @@ export default function Accreditation() {
           </p>
           <div style={{
             display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
             justifyContent: 'center',
-            gap: '2rem',
+            gap: '1rem',
             marginTop: '2rem'
           }}>
             {[
-              { icon: <FiAward size={32} />, text: '5 International Accreditations' },
-              { icon: <FiUsers size={32} />, text: '12+ Global Partnerships' },
-              { icon: <FiGlobe size={32} />, text: 'World-Class Curriculum' }
+              { icon: <FiAward size={isMobile ? 24 : 32} />, text: '5 International Accreditations' },
+              { icon: <FiUsers size={isMobile ? 24 : 32} />, text: '12+ Global Partnerships' },
+              { icon: <FiGlobe size={isMobile ? 24 : 32} />, text: 'World-Class Curriculum' }
             ].map((item, index) => (
               <div key={index} style={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: isMobile ? 'center' : 'flex-start',
                 gap: '0.5rem',
                 backgroundColor: 'rgba(212, 160, 23, 0.2)',
                 padding: '0.75rem 1.5rem',
-                borderRadius: '50px'
+                borderRadius: '50px',
+                width: isMobile ? '100%' : 'auto'
               }}>
                 {item.icon}
-                <span>{item.text}</span>
+                <span style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{item.text}</span>
               </div>
             ))}
           </div>
@@ -79,34 +100,59 @@ export default function Accreditation() {
       <main style={{
         maxWidth: '1280px',
         margin: '0 auto',
-        padding: '0 16px 64px'
+        padding: isMobile ? '0 16px 48px' : '0 16px 64px'
       }}>
         {/* Tab Navigation */}
         <div style={{
           display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
           justifyContent: 'center',
           marginBottom: '3rem',
-          borderBottom: '1px solid #E5E7EB'
+          borderBottom: isMobile ? 'none' : '1px solid #E5E7EB'
         }}>
-          {['accreditations', 'affiliations', 'quality-assurance', 'benefits'].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
+          {isMobile ? (
+            <select
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value)}
               style={{
-                padding: '1rem 2rem',
-                backgroundColor: 'transparent',
-                border: 'none',
-                borderBottom: activeTab === tab ? '3px solid #D4A017' : '3px solid transparent',
+                padding: '1rem',
+                backgroundColor: 'white',
+                border: '1px solid #E5E7EB',
+                borderRadius: '8px',
                 fontWeight: '600',
-                fontSize: '1.1rem',
-                color: activeTab === tab ? '#4B5320' : '#6B7280',
+                fontSize: '1rem',
+                color: '#4B5320',
                 cursor: 'pointer',
-                transition: 'all 0.3s ease'
+                marginBottom: '1rem'
               }}
             >
-              {tab.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-            </button>
-          ))}
+              {['accreditations', 'affiliations', 'quality-assurance', 'benefits'].map((tab) => (
+                <option key={tab} value={tab}>
+                  {tab.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                </option>
+              ))}
+            </select>
+          ) : (
+            ['accreditations', 'affiliations', 'quality-assurance', 'benefits'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                style={{
+                  padding: '1rem 2rem',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  borderBottom: activeTab === tab ? '3px solid #D4A017' : '3px solid transparent',
+                  fontWeight: '600',
+                  fontSize: '1.1rem',
+                  color: activeTab === tab ? '#4B5320' : '#6B7280',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                {tab.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+              </button>
+            ))
+          )}
         </div>
 
         {/* Accreditations Section */}
@@ -114,7 +160,7 @@ export default function Accreditation() {
           <section>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <h2 style={{
-                fontSize: '2.5rem',
+                fontSize: isMobile ? '2rem' : '2.5rem',
                 fontWeight: '700',
                 color: '#4B5320',
                 marginBottom: '1rem'
@@ -122,7 +168,7 @@ export default function Accreditation() {
                 Our Recognitions & Accreditations
               </h2>
               <p style={{
-                fontSize: '1.2rem',
+                fontSize: isMobile ? '1rem' : '1.2rem',
                 color: '#6B7280',
                 maxWidth: '800px',
                 margin: '0 auto',
@@ -134,7 +180,7 @@ export default function Accreditation() {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))',
               gap: '2rem',
               marginBottom: '3rem'
             }}>
@@ -192,37 +238,40 @@ export default function Accreditation() {
                   overflow: 'hidden',
                   transition: 'transform 0.3s, box-shadow 0.3s'
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={!isMobile ? (e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
                   e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.15)';
-                }}
-                onMouseLeave={(e) => {
+                } : undefined}
+                onMouseLeave={!isMobile ? (e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
-                }}
+                } : undefined}
                 >
                   <div style={{
-                    padding: '2rem',
+                    padding: isMobile ? '1.5rem' : '2rem',
                     borderBottom: '1px solid #F3F4F6'
                   }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      marginBottom: '1.5rem'
+                      marginBottom: '1.5rem',
+                      flexDirection: isMobile ? 'column' : 'row',
+                      textAlign: isMobile ? 'center' : 'left'
                     }}>
                       <img
                         src={accreditation.logo}
                         alt={accreditation.name}
                         style={{
-                          width: '80px',
-                          height: '80px',
+                          width: isMobile ? '60px' : '80px',
+                          height: isMobile ? '60px' : '80px',
                           objectFit: 'contain',
-                          marginRight: '1rem'
+                          marginRight: isMobile ? '0' : '1rem',
+                          marginBottom: isMobile ? '1rem' : '0'
                         }}
                       />
                       <div>
                         <h3 style={{
-                          fontSize: '1.35rem',
+                          fontSize: isMobile ? '1.2rem' : '1.35rem',
                           fontWeight: '600',
                           color: '#4B5320',
                           marginBottom: '0.5rem'
@@ -231,15 +280,18 @@ export default function Accreditation() {
                         </h3>
                         <div style={{
                           display: 'flex',
-                          gap: '1rem',
-                          fontSize: '0.9rem'
+                          flexDirection: isMobile ? 'column' : 'row',
+                          gap: '0.5rem',
+                          fontSize: '0.9rem',
+                          alignItems: isMobile ? 'center' : 'flex-start'
                         }}>
                           <span style={{
                             backgroundColor: '#ECFDF5',
                             color: '#065F46',
                             padding: '0.25rem 0.75rem',
                             borderRadius: '50px',
-                            fontWeight: '500'
+                            fontWeight: '500',
+                            marginBottom: isMobile ? '0.5rem' : '0'
                           }}>
                             {accreditation.status}
                           </span>
@@ -255,7 +307,8 @@ export default function Accreditation() {
                     <p style={{
                       color: '#6B7280',
                       lineHeight: '1.6',
-                      marginBottom: '1.5rem'
+                      marginBottom: '1.5rem',
+                      fontSize: isMobile ? '0.95rem' : '1rem'
                     }}>
                       {accreditation.desc}
                     </p>
@@ -271,7 +324,11 @@ export default function Accreditation() {
                         color: '#D4A017',
                         fontWeight: '600',
                         cursor: 'pointer',
-                        padding: 0
+                        padding: 0,
+                        fontSize: isMobile ? '0.95rem' : '1rem',
+                        margin: '0 auto',
+                        width: isMobile ? '100%' : 'auto',
+                        justifyContent: isMobile ? 'center' : 'flex-start'
                       }}
                     >
                       {expandedCard === index ? 'Show Less' : 'Read More'} 
@@ -284,13 +341,14 @@ export default function Accreditation() {
                   
                   {expandedCard === index && (
                     <div style={{
-                      padding: '0 2rem 2rem',
+                      padding: isMobile ? '1rem 1.5rem 1.5rem' : '0 2rem 2rem',
                       backgroundColor: '#F9FAFB'
                     }}>
                       <p style={{
                         color: '#6B7280',
                         lineHeight: '1.6',
-                        marginBottom: '1.5rem'
+                        marginBottom: '1.5rem',
+                        fontSize: isMobile ? '0.95rem' : '1rem'
                       }}>
                         {accreditation.details}
                       </p>
@@ -302,7 +360,10 @@ export default function Accreditation() {
                           gap: '0.5rem',
                           color: '#4B5320',
                           fontWeight: '600',
-                          textDecoration: 'none'
+                          textDecoration: 'none',
+                          fontSize: isMobile ? '0.95rem' : '1rem',
+                          justifyContent: isMobile ? 'center' : 'flex-start',
+                          width: isMobile ? '100%' : 'auto'
                         }}
                       >
                         Verify accreditation status <FiExternalLink size={16} />
@@ -320,7 +381,7 @@ export default function Accreditation() {
           <section>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <h2 style={{
-                fontSize: '2.5rem',
+                fontSize: isMobile ? '2rem' : '2.5rem',
                 fontWeight: '700',
                 color: '#4B5320',
                 marginBottom: '1rem'
@@ -328,7 +389,7 @@ export default function Accreditation() {
                 Global Partnerships & Affiliations
               </h2>
               <p style={{
-                fontSize: '1.2rem',
+                fontSize: isMobile ? '1rem' : '1.2rem',
                 color: '#6B7280',
                 maxWidth: '800px',
                 margin: '0 auto',
@@ -340,7 +401,7 @@ export default function Accreditation() {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))',
               gap: '2rem'
             }}>
               {[
@@ -389,38 +450,41 @@ export default function Accreditation() {
               ].map((affiliation, index) => (
                 <div key={index} style={{
                   backgroundColor: '#FFFFFF',
-                  padding: '2rem',
+                  padding: isMobile ? '1.5rem' : '2rem',
                   borderRadius: '12px',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                  transition: 'transform 0.3s, box-shadow 0.3s'
+                  transition: !isMobile ? 'transform 0.3s, box-shadow 0.3s' : 'none'
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={!isMobile ? (e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
                   e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.15)';
-                }}
-                onMouseLeave={(e) => {
+                } : undefined}
+                onMouseLeave={!isMobile ? (e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
-                }}
+                } : undefined}
                 >
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    marginBottom: '1.5rem'
+                    marginBottom: '1.5rem',
+                    flexDirection: isMobile ? 'column' : 'row',
+                    textAlign: isMobile ? 'center' : 'left'
                   }}>
                     <img
                       src={affiliation.logo}
                       alt={affiliation.name}
                       style={{
-                        width: '70px',
-                        height: '70px',
+                        width: isMobile ? '60px' : '70px',
+                        height: isMobile ? '60px' : '70px',
                         objectFit: 'contain',
-                        marginRight: '1rem'
+                        marginRight: isMobile ? '0' : '1rem',
+                        marginBottom: isMobile ? '1rem' : '0'
                       }}
                     />
                     <div>
                       <h3 style={{
-                        fontSize: '1.35rem',
+                        fontSize: isMobile ? '1.2rem' : '1.35rem',
                         fontWeight: '600',
                         color: '#4B5320',
                         marginBottom: '0.5rem'
@@ -444,14 +508,15 @@ export default function Accreditation() {
                   <p style={{
                     color: '#6B7280',
                     lineHeight: '1.6',
-                    marginBottom: '1.5rem'
+                    marginBottom: '1.5rem',
+                    fontSize: isMobile ? '0.95rem' : '1rem'
                   }}>
                     {affiliation.desc}
                   </p>
                   
                   <div>
                     <h4 style={{
-                      fontSize: '1.1rem',
+                      fontSize: isMobile ? '1.05rem' : '1.1rem',
                       fontWeight: '600',
                       color: '#4B5320',
                       marginBottom: '1rem'
@@ -460,7 +525,8 @@ export default function Accreditation() {
                     </h4>
                     <ul style={{
                       paddingLeft: '1.5rem',
-                      color: '#6B7280'
+                      color: '#6B7280',
+                      fontSize: isMobile ? '0.95rem' : '1rem'
                     }}>
                       {affiliation.benefits.map((benefit, i) => (
                         <li key={i} style={{ marginBottom: '0.5rem' }}>{benefit}</li>
@@ -478,7 +544,7 @@ export default function Accreditation() {
           <section>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <h2 style={{
-                fontSize: '2.5rem',
+                fontSize: isMobile ? '2rem' : '2.5rem',
                 fontWeight: '700',
                 color: '#4B5320',
                 marginBottom: '1rem'
@@ -486,7 +552,7 @@ export default function Accreditation() {
                 Our Quality Assurance Process
               </h2>
               <p style={{
-                fontSize: '1.2rem',
+                fontSize: isMobile ? '1rem' : '1.2rem',
                 color: '#6B7280',
                 maxWidth: '800px',
                 margin: '0 auto',
@@ -498,7 +564,7 @@ export default function Accreditation() {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
               gap: '2rem',
               marginBottom: '3rem'
             }}>
@@ -506,27 +572,27 @@ export default function Accreditation() {
                 {
                   title: 'Regular External Reviews',
                   description: 'We undergo comprehensive evaluations every 3-5 years by each accrediting body, with interim reports and visits to ensure continuous compliance.',
-                  icon: <FiBookOpen size={32} color="#D4A017" />
+                  icon: <FiBookOpen size={isMobile ? 28 : 32} color="#D4A017" />
                 },
                 {
                   title: 'Internal Quality Audits',
                   description: 'Our internal quality team conducts biannual audits of all academic departments, facilities, and administrative processes.',
-                  icon: <FiAward size={32} color="#D4A017" />
+                  icon: <FiAward size={isMobile ? 28 : 32} color="#D4A017" />
                 },
                 {
                   title: 'Stakeholder Feedback',
                   description: 'We systematically collect and analyze feedback from students, parents, staff, and alumni to identify areas for improvement.',
-                  icon: <FiUsers size={32} color="#D4A017" />
+                  icon: <FiUsers size={isMobile ? 28 : 32} color="#D4A017" />
                 },
                 {
                   title: 'Continuous Improvement',
                   description: 'Findings from audits and feedback are incorporated into our strategic planning and development processes.',
-                  icon: <FiGlobe size={32} color="#D4A017" />
+                  icon: <FiGlobe size={isMobile ? 28 : 32} color="#D4A017" />
                 }
               ].map((item, index) => (
                 <div key={index} style={{
                   backgroundColor: '#FFFFFF',
-                  padding: '2rem',
+                  padding: isMobile ? '1.5rem' : '2rem',
                   borderRadius: '12px',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                   textAlign: 'center'
@@ -539,7 +605,7 @@ export default function Accreditation() {
                     {item.icon}
                   </div>
                   <h3 style={{
-                    fontSize: '1.35rem',
+                    fontSize: isMobile ? '1.2rem' : '1.35rem',
                     fontWeight: '600',
                     color: '#4B5320',
                     marginBottom: '1rem'
@@ -548,7 +614,8 @@ export default function Accreditation() {
                   </h3>
                   <p style={{
                     color: '#6B7280',
-                    lineHeight: '1.6'
+                    lineHeight: '1.6',
+                    fontSize: isMobile ? '0.95rem' : '1rem'
                   }}>
                     {item.description}
                   </p>
@@ -558,12 +625,12 @@ export default function Accreditation() {
 
             <div style={{
               backgroundColor: '#F9FAFB',
-              padding: '3rem',
+              padding: isMobile ? '1.5rem' : '3rem',
               borderRadius: '12px',
               marginBottom: '3rem'
             }}>
               <h3 style={{
-                fontSize: '1.8rem',
+                fontSize: isMobile ? '1.5rem' : '1.8rem',
                 fontWeight: '600',
                 color: '#4B5320',
                 marginBottom: '1.5rem',
@@ -577,11 +644,11 @@ export default function Accreditation() {
                 flexDirection: 'column',
                 gap: '2rem',
                 position: 'relative',
-                marginLeft: '100px'
+                marginLeft: isMobile ? '50px' : '100px'
               }}>
                 <div style={{
                   position: 'absolute',
-                  left: '30px',
+                  left: isMobile ? '15px' : '30px',
                   top: '0',
                   bottom: '0',
                   width: '4px',
@@ -603,8 +670,8 @@ export default function Accreditation() {
                     position: 'relative'
                   }}>
                     <div style={{
-                      width: '60px',
-                      height: '60px',
+                      width: isMobile ? '40px' : '60px',
+                      height: isMobile ? '40px' : '60px',
                       borderRadius: '50%',
                       backgroundColor: '#4B5320',
                       color: 'white',
@@ -612,27 +679,29 @@ export default function Accreditation() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       fontWeight: 'bold',
-                      fontSize: '1.2rem',
+                      fontSize: isMobile ? '1rem' : '1.2rem',
                       position: 'absolute',
-                      left: '-100px'
+                      left: isMobile ? '-55px' : '-100px'
                     }}>
                       {index + 1}
                     </div>
                     <div style={{
                       backgroundColor: 'white',
-                      padding: '1.5rem',
+                      padding: isMobile ? '1rem' : '1.5rem',
                       borderRadius: '8px',
                       boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
                       flex: 1
                     }}>
                       <div style={{
                         display: 'flex',
+                        flexDirection: isMobile ? 'column' : 'row',
                         justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '0.5rem'
+                        alignItems: isMobile ? 'flex-start' : 'center',
+                        marginBottom: '0.5rem',
+                        gap: isMobile ? '0.5rem' : '0'
                       }}>
                         <h4 style={{
-                          fontSize: '1.2rem',
+                          fontSize: isMobile ? '1.1rem' : '1.2rem',
                           fontWeight: '600',
                           color: '#4B5320'
                         }}>
@@ -644,12 +713,17 @@ export default function Accreditation() {
                           padding: '0.25rem 0.75rem',
                           borderRadius: '50px',
                           fontWeight: '500',
-                          fontSize: '0.9rem'
+                          fontSize: '0.9rem',
+                          width: isMobile ? 'fit-content' : 'auto'
                         }}>
                           {item.duration}
                         </span>
                       </div>
-                      <p style={{ color: '#6B7280', margin: 0 }}>
+                      <p style={{ 
+                        color: '#6B7280', 
+                        margin: 0,
+                        fontSize: isMobile ? '0.9rem' : '1rem'
+                      }}>
                         {item.description}
                       </p>
                     </div>
@@ -665,7 +739,7 @@ export default function Accreditation() {
           <section>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <h2 style={{
-                fontSize: '2.5rem',
+                fontSize: isMobile ? '2rem' : '2.5rem',
                 fontWeight: '700',
                 color: '#4B5320',
                 marginBottom: '1rem'
@@ -673,7 +747,7 @@ export default function Accreditation() {
                 Benefits of Our Accredited Status
               </h2>
               <p style={{
-                fontSize: '1.2rem',
+                fontSize: isMobile ? '1rem' : '1.2rem',
                 color: '#6B7280',
                 maxWidth: '800px',
                 margin: '0 auto',
@@ -685,7 +759,7 @@ export default function Accreditation() {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
               gap: '2rem',
               marginBottom: '3rem'
             }}>
@@ -717,13 +791,13 @@ export default function Accreditation() {
               ].map((item, index) => (
                 <div key={index} style={{
                   backgroundColor: '#FFFFFF',
-                  padding: '2rem',
+                  padding: isMobile ? '1.5rem' : '2rem',
                   borderRadius: '12px',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                   borderLeft: '4px solid #D4A017'
                 }}>
                   <h3 style={{
-                    fontSize: '1.35rem',
+                    fontSize: isMobile ? '1.2rem' : '1.35rem',
                     fontWeight: '600',
                     color: '#4B5320',
                     marginBottom: '1rem'
@@ -732,7 +806,8 @@ export default function Accreditation() {
                   </h3>
                   <p style={{
                     color: '#6B7280',
-                    lineHeight: '1.6'
+                    lineHeight: '1.6',
+                    fontSize: isMobile ? '0.95rem' : '1rem'
                   }}>
                     {item.description}
                   </p>
@@ -743,19 +818,19 @@ export default function Accreditation() {
             <div style={{
               backgroundColor: '#4B5320',
               color: 'white',
-              padding: '3rem',
+              padding: isMobile ? '1.5rem' : '3rem',
               borderRadius: '12px',
               textAlign: 'center'
             }}>
               <h3 style={{
-                fontSize: '2rem',
+                fontSize: isMobile ? '1.5rem' : '2rem',
                 fontWeight: '600',
                 marginBottom: '1.5rem'
               }}>
                 Verify Our Accreditation Status
               </h3>
               <p style={{
-                fontSize: '1.2rem',
+                fontSize: isMobile ? '1rem' : '1.2rem',
                 maxWidth: '800px',
                 margin: '0 auto 2rem',
                 lineHeight: '1.7'
@@ -764,6 +839,7 @@ export default function Accreditation() {
               </p>
               <div style={{
                 display: 'flex',
+                flexDirection: isMobile ? 'column' : 'row',
                 justifyContent: 'center',
                 gap: '1rem',
                 flexWrap: 'wrap'
@@ -787,15 +863,17 @@ export default function Accreditation() {
                       borderRadius: '6px',
                       textDecoration: 'none',
                       fontWeight: '600',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.3s ease',
+                      fontSize: isMobile ? '0.9rem' : '1rem',
+                      justifyContent: 'center'
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.backgroundColor = '#b58900';
-                      e.target.style.transform = 'translateY(-2px)';
+                      if (!isMobile) e.target.style.transform = 'translateY(-2px)';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.backgroundColor = '#D4A017';
-                      e.target.style.transform = 'translateY(0)';
+                      if (!isMobile) e.target.style.transform = 'translateY(0)';
                     }}
                   >
                     {item.name} <FiExternalLink size={16} />
@@ -809,21 +887,21 @@ export default function Accreditation() {
         {/* CTA Section */}
         <section style={{
           textAlign: 'center',
-          padding: '4rem 2rem',
+          padding: isMobile ? '2.5rem 1.5rem' : '4rem 2rem',
           backgroundColor: '#D4A017',
           borderRadius: '12px',
           color: '#1F2937',
           marginTop: '4rem'
         }}>
           <h2 style={{
-            fontSize: '2.5rem',
+            fontSize: isMobile ? '1.8rem' : '2.5rem',
             fontWeight: '700',
             marginBottom: '1rem'
           }}>
             Join Our Accredited Learning Community
           </h2>
           <p style={{
-            fontSize: '1.2rem',
+            fontSize: isMobile ? '1rem' : '1.2rem',
             maxWidth: '700px',
             margin: '0 auto 2rem',
             lineHeight: '1.7'
@@ -832,6 +910,7 @@ export default function Accreditation() {
           </p>
           <div style={{
             display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
             justifyContent: 'center',
             gap: '1rem',
             flexWrap: 'wrap'
@@ -844,17 +923,18 @@ export default function Accreditation() {
                 padding: '1rem 2rem',
                 borderRadius: '8px',
                 textDecoration: 'none',
-                fontSize: '1.1rem',
+                fontSize: isMobile ? '1rem' : '1.1rem',
                 fontWeight: '600',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                textAlign: 'center'
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#4B5320';
-                e.target.style.transform = 'scale(1.05)';
+                if (!isMobile) e.target.style.transform = 'scale(1.05)';
               }}
               onMouseLeave={(e) => {
                 e.target.style.backgroundColor = '#1F2937';
-                e.target.style.transform = 'scale(1)';
+                if (!isMobile) e.target.style.transform = 'scale(1)';
               }}
             >
               Apply for Admission
@@ -867,20 +947,21 @@ export default function Accreditation() {
                 padding: '1rem 2rem',
                 borderRadius: '8px',
                 textDecoration: 'none',
-                fontSize: '1.1rem',
+                fontSize: isMobile ? '1rem' : '1.1rem',
                 fontWeight: '600',
                 border: '2px solid #1F2937',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                textAlign: 'center'
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#1F2937';
                 e.target.style.color = '#FFFFFF';
-                e.target.style.transform = 'scale(1.05)';
+                if (!isMobile) e.target.style.transform = 'scale(1.05)';
               }}
               onMouseLeave={(e) => {
                 e.target.style.backgroundColor = 'transparent';
                 e.target.style.color = '#1F2937';
-                e.target.style.transform = 'scale(1)';
+                if (!isMobile) e.target.style.transform = 'scale(1)';
               }}
             >
               Schedule a Tour

@@ -25,7 +25,7 @@ export default function Apply() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Application submitted! We will contact you soon.');
+    alert('Application submitted, We will contduywueuact you soon.');
   };
 
   return (

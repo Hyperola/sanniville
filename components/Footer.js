@@ -1,296 +1,350 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
 
-const Footer = () => {
-  const [email, setEmail] = useState('');
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    alert(`Subscribed with ${email}!`);
-    setEmail('');
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Set initial value
+    checkIsMobile();
+    
+    // Add event listener
+    window.addEventListener('resize', checkIsMobile);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
+
+  const toggleDropdown = (dropdown) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
-  return (
-    <footer
-      style={{
-        backgroundColor: '#4B5320',
-        color: '#FFFFFF',
-        padding: '64px 16px',
-        fontFamily: "'Merriweather', serif",
-        boxShadow: '0 -4px 8px rgba(0,0,0,0.15)'
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          gap: '32px',
-          paddingBottom: '48px',
-          borderBottom: '1px solid #E5E7EB'
-        }}
-        className="footer-grid"
-      >
-        <div>
-          <h3
-            style={{
-              fontSize: '22px',
-              fontWeight: '700',
-              marginBottom: '20px',
-              color: '#D4A017'
-            }}
-          >
-            About Sanniville Academy
-          </h3>
-          <p
-            style={{
-              fontSize: '16px',
-              lineHeight: '1.7',
-              color: '#E5E7EB',
-              maxWidth: '300px'
-            }}
-          >
-            Sanniville Academy is dedicated to fostering academic excellence, leadership, and innovation in a nurturing environment.
-          </p>
-          <img
-            src="/images/sanniville-logo.png"
-            alt="Sanniville Academy Logo"
-            style={{
-              height: '48px',
-              width: 'auto',
-              objectFit: 'contain',
-              marginTop: '16px',
-              transition: 'transform 0.3s ease-in-out'
-            }}
-            onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-          />
-        </div>
-        <div>
-          <h3
-            style={{
-              fontSize: '22px',
-              fontWeight: '700',
-              marginBottom: '20px',
-              color: '#D4A017'
-            }}
-          >
-            Quick Links
-          </h3>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {[
-              { name: 'Home', href: '/' },
-              { name: 'About Us', href: '/about' },
-              { name: 'Admissions', href: '/admissions' },
-              { name: 'News & Events', href: '/news-events' },
-              { name: 'Academics', href: '/academics' },
-              { name: 'E-Portal', href: '/e-portal' },
-              { name: 'Contact Us', href: '/contact-us' }
-            ].map((link, index) => (
-              <li key={index} style={{ marginBottom: '12px' }}>
-                <Link
-                  href={link.href}
-                  style={{
-                    color: '#E5E7EB',
-                    textDecoration: 'none',
-                    fontSize: '16px',
-                    transition: 'color 0.3s ease-in-out'
-                  }}
-                  onMouseEnter={(e) => e.target.style.color = '#D4A017'}
-                  onMouseLeave={(e) => e.target.style.color = '#E5E7EB'}
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3
-            style={{
-              fontSize: '22px',
-              fontWeight: '700',
-              marginBottom: '20px',
-              color: '#D4A017'
-            }}
-          >
-            Contact Us
-          </h3>
-          <p
-            style={{
-              fontSize: '16px',
-              lineHeight: '1.7',
-              color: '#E5E7EB',
-              marginBottom: '16px'
-            }}
-          >
-            Lagos Campus<br />
-            123 Sanni Road, Victoria Island, Lagos<br />
-            Phone: +234 123 456 7890<br />
-            Email: lagos@sannivilleacademy.edu.ng
-          </p>
-          <p
-            style={{
-              fontSize: '16px',
-              lineHeight: '1.7',
-              color: '#E5E7EB'
-            }}
-          >
-            Abuja Campus<br />
-            456 Unity Avenue, Garki, Abuja<br />
-            Phone: +234 987 654 3210<br />
-            Email: abuja@sannivilleacademy.edu.ng
-          </p>
-        </div>
-        <div>
-          <h3
-            style={{
-              fontSize: '22px',
-              fontWeight: '700',
-              marginBottom: '20px',
-              color: '#D4A017'
-            }}
-          >
-            Stay Connected
-          </h3>
-          <div
-            style={{
-              display: 'flex',
-              gap: '20px',
-              marginBottom: '24px'
-            }}
-          >
-            {[
-              { href: 'https://facebook.com/sanniville', icon: 'fab fa-facebook-f' },
-              { href: 'https://twitter.com/sanniville', icon: 'fab fa-twitter' },
-              { href: 'https://instagram.com/sanniville', icon: 'fab fa-instagram' }
-            ].map((social, index) => (
-              <a
-                key={index}
-                href={social.href}
-                style={{
-                  color: '#E5E7EB',
-                  fontSize: '28px',
-                  transition: 'all 0.3s ease-in-out'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.color = '#D4A017';
-                  e.target.style.transform = 'scale(1.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.color = '#E5E7EB';
-                  e.target.style.transform = 'scale(1)';
-                }}
-              >
-                <i className={social.icon}></i>
-              </a>
-            ))}
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px'
-            }}
-            className="subscribe-form"
-          >
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              style={{
-                padding: '14px',
-                borderRadius: '8px',
-                border: '1px solid #E5E7EB',
-                fontSize: '16px',
-                width: '100%',
-                maxWidth: '220px',
-                fontFamily: "'Merriweather', serif",
-                backgroundColor: '#FFFFFF',
-                color: '#1F2937',
-                transition: 'border-color 0.3s ease-in-out'
-              }}
-              onFocus={(e) => e.target.style.borderColor = '#D4A017'}
-              onBlur={(e) => e.target.style.borderColor = '#E5E7EB'}
-            />
-            <button
-              onClick={handleSubscribe}
-              style={{
-                backgroundColor: '#D4A017',
-                color: '#1F2937',
-                padding: '14px 24px',
-                borderRadius: '8px',
-                border: 'none',
-                fontSize: '16px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease-in-out',
-                width: '100%',
-                maxWidth: '220px'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#b58900';
-                e.target.style.transform = 'scale(1.05)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#D4A017';
-                e.target.style.transform = 'scale(1)';
-              }}
-            >
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
-        style={{
-          textAlign: 'center',
-          marginTop: '40px',
-          fontSize: '14px',
-          color: '#E5E7EB'
-        }}
-      >
-        &copy; {new Date().getFullYear()} Sanniville Academy. All rights reserved.
-      </div>
+  const closeMenu = () => {
+    setIsOpen(false);
+    setActiveDropdown(null);
+  };
 
-      <style jsx>{`
-        @media (min-width: 640px) {
-          .footer-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-          .subscribe-form {
-            flex-direction: row;
-          }
-          .subscribe-form input,
-          .subscribe-form button {
-            max-width: 180px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .footer-grid {
-            grid-template-columns: repeat(4, 1fr);
-          }
-          .subscribe-form input,
-          .subscribe-form button {
-            max-width: 220px;
-          }
-        }
-        @media (max-width: 639px) {
-          .subscribe-form {
-            flex-direction: column;
-          }
-          .subscribe-form input,
-          .subscribe-form button {
-            max-width: 100%;
-          }
-        }
-      `}</style>
-    </footer>
+  const navItems = [
+    { name: 'Home', href: '/' },
+    { 
+      name: 'About Us', 
+      href: '/about',
+      dropdown: [
+        { name: 'Our Story', href: '/about/our-story' },
+        { name: 'Leadership', href: '/about/leadership' },
+        { name: 'Accreditations', href: '/about/accreditations' }
+      ]
+    },
+    { 
+      name: 'Academics', 
+      href: '/academics',
+      dropdown: [
+        { name: 'Curriculum', href: '/academics/curriculum' },
+        { name: 'Departments', href: '/academics/departments' },
+        { name: 'Academic Calendar', href: '/academics/calendar' }
+      ]
+    },
+    { 
+      name: 'Admissions', 
+      href: '/admissions',
+      dropdown: [
+        { name: 'Apply Now', href: '/admissions/apply' },
+        { name: 'Requirements', href: '/admissions/requirements' },
+        { name: 'Scholarships', href: '/admissions/scholarships' }
+      ]
+    },
+    { 
+      name: 'Campuses', 
+      href: '/campuses',
+      dropdown: [
+        { name: 'Lagos Campus', href: '/campuses/lagos' },
+        { name: 'Abuja Campus', href: '/campuses/abuja' },
+        { name: 'Virtual Tour', href: '/campuses/virtual-tour' }
+      ]
+    },
+    { name: 'News & Events', href: '/news-events' },
+    { name: 'Contact Us', href: '/contact-us' },
+    { name: 'E-Portal', href: '/e-portal', highlight: true }
+  ];
+
+  return (
+    <>
+      <nav
+        style={{
+          backgroundColor: '#4B5320',
+          padding: isMobile ? '16px' : '0 32px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 1000,
+          fontFamily: "'Merriweather', serif"
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '1280px',
+            margin: '0 auto',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
+          {/* Logo */}
+          <Link 
+            href="/" 
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center',
+              textDecoration: 'none'
+            }}
+            onClick={closeMenu}
+          >
+            <img
+              src="/images/sanniville-logo.png"
+              alt="Sanniville Academy Logo"
+              style={{
+                height: isMobile ? '40px' : '50px',
+                width: 'auto',
+                objectFit: 'contain'
+              }}
+            />
+          </Link>
+
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {navItems.map((item, index) => (
+                <div key={index} style={{ position: 'relative' }}>
+                  {item.dropdown ? (
+                    <div style={{ position: 'relative' }}>
+                      <button
+                        onClick={() => toggleDropdown(item.name)}
+                        style={{
+                          backgroundColor: 'transparent',
+                          border: 'none',
+                          color: '#FFFFFF',
+                          padding: '20px 16px',
+                          fontSize: '16px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          transition: 'color 0.3s ease'
+                        }}
+                        onMouseEnter={() => setActiveDropdown(item.name)}
+                        onMouseLeave={() => setActiveDropdown(null)}
+                      >
+                        {item.name}
+                        <FiChevronDown style={{
+                          transform: activeDropdown === item.name ? 'rotate(180deg)' : 'rotate(0)',
+                          transition: 'transform 0.3s ease'
+                        }} />
+                      </button>
+                      {activeDropdown === item.name && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: '0',
+                            backgroundColor: '#FFFFFF',
+                            minWidth: '200px',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                            padding: '16px 0',
+                            zIndex: 1000
+                          }}
+                          onMouseEnter={() => setActiveDropdown(item.name)}
+                          onMouseLeave={() => setActiveDropdown(null)}
+                        >
+                          {item.dropdown.map((dropdownItem, idx) => (
+                            <Link
+                              key={idx}
+                              href={dropdownItem.href}
+                              style={{
+                                display: 'block',
+                                padding: '12px 24px',
+                                color: '#1F2937',
+                                textDecoration: 'none',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                transition: 'background-color 0.3s ease'
+                              }}
+                              onMouseEnter={(e) => e.target.style.backgroundColor = '#F9FAFB'}
+                              onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                            >
+                              {dropdownItem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      style={{
+                        color: '#FFFFFF',
+                        padding: '20px 16px',
+                        textDecoration: 'none',
+                        fontSize: '16px',
+                        fontWeight: item.highlight ? '700' : '600',
+                        display: 'block',
+                        transition: 'color 0.3s ease',
+                        backgroundColor: item.highlight ? '#D4A017' : 'transparent',
+                        borderRadius: item.highlight ? '6px' : '0',
+                        margin: item.highlight ? '0 8px' : '0'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!item.highlight) e.target.style.color = '#D4A017';
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!item.highlight) e.target.style.color = '#FFFFFF';
+                      }}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Mobile Menu Button */}
+          {isMobile && (
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              style={{
+                backgroundColor: 'transparent',
+                border: 'none',
+                color: '#FFFFFF',
+                fontSize: '24px',
+                cursor: 'pointer',
+                padding: '8px'
+              }}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <FiX /> : <FiMenu />}
+            </button>
+          )}
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMobile && isOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '100%',
+              left: '0',
+              right: '0',
+              backgroundColor: '#4B5320',
+              padding: '16px',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {navItems.map((item, index) => (
+                <div key={index}>
+                  {item.dropdown ? (
+                    <div>
+                      <button
+                        onClick={() => toggleDropdown(item.name)}
+                        style={{
+                          backgroundColor: 'transparent',
+                          border: 'none',
+                          color: '#FFFFFF',
+                          padding: '16px',
+                          fontSize: '16px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          width: '100%',
+                          textAlign: 'left'
+                        }}
+                      >
+                        {item.name}
+                        <FiChevronDown style={{
+                          transform: activeDropdown === item.name ? 'rotate(180deg)' : 'rotate(0)',
+                          transition: 'transform 0.3s ease'
+                        }} />
+                      </button>
+                      {activeDropdown === item.name && (
+                        <div style={{ paddingLeft: '24px' }}>
+                          {item.dropdown.map((dropdownItem, idx) => (
+                            <Link
+                              key={idx}
+                              href={dropdownItem.href}
+                              style={{
+                                display: 'block',
+                                padding: '12px 16px',
+                                color: '#FFFFFF',
+                                textDecoration: 'none',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                borderLeft: '2px solid #D4A017'
+                              }}
+                              onClick={closeMenu}
+                            >
+                              {dropdownItem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      style={{
+                        color: '#FFFFFF',
+                        padding: '16px',
+                        textDecoration: 'none',
+                        fontSize: '16px',
+                        fontWeight: item.highlight ? '700' : '600',
+                        display: 'block',
+                        backgroundColor: item.highlight ? '#D4A017' : 'transparent',
+                        borderRadius: item.highlight ? '6px' : '0',
+                        margin: item.highlight ? '8px 0' : '0'
+                      }}
+                      onClick={closeMenu}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Overlay for mobile menu */}
+      {isMobile && isOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '72px',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            zIndex: 999
+          }}
+          onClick={closeMenu}
+        />
+      )}
+    </>
   );
 };
 
-export default Footer;
+export default Navbar;

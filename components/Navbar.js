@@ -1,449 +1,366 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navbarRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-        setActiveDropdown(null);
-        setIsMobileMenuOpen(false);
+    const checkIsMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setIsOpen(false); // Close menu when switching to desktop
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    
+    // Set initial value
+    checkIsMobile();
+    
+    // Add event listener
+    window.addEventListener('resize', checkIsMobile);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
   }, []);
 
-  const toggleDropdown = (dropdownName) => {
-    setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
+  const toggleDropdown = (dropdown) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-    if (!isMobileMenuOpen) setActiveDropdown(null);
+  const closeMenu = () => {
+    setIsOpen(false);
+    setActiveDropdown(null);
   };
 
-  const navItems = {
-    home: { href: '/', text: 'Home' },
-    about: {
-      text: 'About Us',
-      subItems: [
-        { href: '/about/history', text: 'History' },
-        { href: '/about/vision-mission', text: 'Vision, Mission & Values' },
-        { href: '/about/leadership', text: 'Leadership Team' },
-        { href: '/about/song-prayers', text: 'School Song & Prayers' },
-        { href: '/about/accreditation', text: 'Accreditation & Affiliations' },
-        { href: '/about/faqs', text: 'FAQs' },
-        { href: '/about/careers', text: 'Careers' },
-        { href: '/about/success-stories', text: 'Success Stories' }
+  const navItems = [
+    { name: 'Home', href: '/' },
+    { 
+      name: 'About Us', 
+      href: '/about',
+      dropdown: [
+        { name: 'Our Story', href: '/about/our-story' },
+        { name: 'Leadership', href: '/about/leadership' },
+        { name: 'Accreditations', href: '/about/accreditations' }
       ]
     },
-    admissions: {
-      text: 'Admissions',
-      subItems: [
-        { href: '/admissions/why-choose-us', text: 'Why Choose Us' },
-        { href: '/admissions/procedure', text: 'Admission Procedure' },
-        { href: '/admissions/requirements', text: 'Admission Requirements' },
-        { href: '/admissions/tuition', text: 'Tuition & Payment' },
-        { href: '/admissions/examination', text: 'Entrance Examination' },
-        { href: '/admissions/scholarships', text: 'Scholarships' },
-        { href: '/admissions/tours', text: 'Campus Tours' },
-        { href: '/admissions/apply', text: 'Application Form' }
+    { 
+      name: 'Academics', 
+      href: '/academics',
+      dropdown: [
+        { name: 'Curriculum', href: '/academics/curriculum' },
+        { name: 'Departments', href: '/academics/departments' },
+        { name: 'Academic Calendar', href: '/academics/calendar' }
       ]
     },
-    news: {
-      text: 'News & Events',
-      subItems: [
-        { href: '/news-events#latest-news', text: 'Latest News' },
-        { href: '/news-events#upcoming-events', text: 'Upcoming Events' },
-        { href: '/news-events#event-gallery', text: 'Event Gallery' }
+    { 
+      name: 'Admissions', 
+      href: '/admissions',
+      dropdown: [
+        { name: 'Apply Now', href: '/admissions/apply' },
+        { name: 'Requirements', href: '/admissions/requirements' },
+        { name: 'Scholarships', href: '/admissions/scholarships' }
       ]
     },
-    campusLife: {
-      text: 'Campus Life',
-      subItems: [
-        { href: '/academics', text: 'Academics' },
-        { href: '/our-campus', text: 'Our Campus' },
-        { href: '/alumni-network', text: 'Alumni Network' }
+    { 
+      name: 'Campuses', 
+      href: '/campuses',
+      dropdown: [
+        { name: 'Lagos Campus', href: '/campuses/lagos' },
+        { name: 'Abuja Campus', href: '/campuses/abuja' },
+        { name: 'Virtual Tour', href: '/campuses/virtual-tour' }
       ]
     },
-    connect: {
-      text: 'Connect',
-      subItems: [
-        { href: '/e-portal', text: 'E-Portal' },
-        { href: '/contact-us', text: 'Contact Us' }
-      ]
-    }
-  };
-
-  const renderDropdownItems = (items) => {
-    return items.map((item) => (
-      <Link
-        key={item.href}
-        href={item.href}
-        style={{
-          display: 'block',
-          padding: '10px 16px',
-          textDecoration: 'none',
-          color: '#1F2937',
-          fontSize: '14px',
-          transition: 'all 0.2s ease',
-          borderRadius: '4px'
-        }}
-        onClick={() => {
-          setActiveDropdown(null);
-          setIsMobileMenuOpen(false);
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.backgroundColor = '#D4A017';
-          e.target.style.color = '#1F2937';
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.backgroundColor = 'transparent';
-          e.target.style.color = '#1F2937';
-        }}
-      >
-        {item.text}
-      </Link>
-    ));
-  };
+    { name: 'News & Events', href: '/news-events' },
+    { name: 'Contact Us', href: '/contact-us' },
+    { name: 'E-Portal', href: '/e-portal', highlight: true }
+  ];
 
   return (
-    <nav
-      style={{
-        background: 'linear-gradient(180deg, #4B5320 0%, #3a4419 100%)',
-        color: '#FFFFFF',
-        padding: '16px',
-        boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-        fontFamily: "'Merriweather', serif",
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-        backdropFilter: 'blur(6px)',
-        backgroundColor: 'rgba(75, 83, 32, 0.95)'
-      }}
-      ref={navbarRef}
-    >
-      <div
+    <>
+      <nav
         style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: '68px'
+          backgroundColor: '#4B5320',
+          padding: isMobile ? '16px' : '0 32px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 1000,
+          fontFamily: "'Merriweather', serif"
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <img
-            src="/images/sanniville-logo.png"
-            alt="Sanniville Academy Logo"
-            style={{
-              height: '44px',
-              width: 'auto',
-              objectFit: 'contain',
-              transition: 'transform 0.3s ease'
-            }}
-            onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-          />
-          <Link
-            href="/"
-            style={{
-              fontSize: '18px',
-              fontWeight: '700',
-              color: '#FFFFFF',
-              textDecoration: 'none',
-              letterSpacing: '0.5px'
-            }}
-          >
-            Sanniville Academy
-          </Link>
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}
-            className="desktop-nav"
-          >
-            {Object.entries(navItems).map(([key, item]) => (
-              <div key={key} style={{ position: 'relative' }}>
-                {item.subItems ? (
-                  <>
-                    <button
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        color: '#FFFFFF',
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontFamily: "'Merriweather', serif",
-                        fontSize: '15px',
-                        padding: '10px 14px',
-                        borderRadius: '6px',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onClick={() => toggleDropdown(key)}
-                      onMouseEnter={(e) => {
-                        e.target.style.color = '#D4A017';
-                        e.target.style.backgroundColor = 'rgba(212, 160, 23, 0.15)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.color = '#FFFFFF';
-                        e.target.style.backgroundColor = 'transparent';
-                      }}
-                    >
-                      {item.text}
-                      <svg
-                        style={{
-                          marginLeft: '6px',
-                          width: '12px',
-                          height: '12px',
-                          transition: 'transform 0.3s ease'
-                        }}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    {activeDropdown === key && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: '100%',
-                          left: 0,
-                          marginTop: '8px',
-                          width: '220px',
-                          backgroundColor: '#FFFFFF',
-                          color: '#1F2937',
-                          boxShadow: '0 6px 12px rgba(0,0,0,0.15)',
-                          borderRadius: '6px',
-                          zIndex: 1001,
-                          padding: '10px 0',
-                          border: '1px solid #E5E7EB',
-                          animation: 'fadeIn 0.3s ease'
-                        }}
-                      >
-                        {renderDropdownItems(item.subItems)}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    href={item.href}
-                    style={{
-                      color: '#FFFFFF',
-                      textDecoration: 'none',
-                      padding: '10px 14px',
-                      borderRadius: '6px',
-                      fontSize: '15px',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.color = '#D4A017';
-                      e.target.style.backgroundColor = 'rgba(212, 160, 23, 0.15)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.color = '#FFFFFF';
-                      e.target.style.backgroundColor = 'transparent';
-                    }}
-                  >
-                    {item.text}
-                  </Link>
-                )}
-              </div>
-            ))}
-            <a
-              href="/login"
-              style={{
-                backgroundColor: '#D4A017',
-                color: '#1F2937',
-                padding: '8px 18px',
-                borderRadius: '6px',
-                textDecoration: 'none',
-                fontSize: '15px',
-                fontWeight: '600',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#b58900';
-                e.target.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#D4A017';
-                e.target.style.transform = 'translateY(0)';
-              }}
-            >
-              E-Portal Login
-            </a>
-          </div>
-
-          <button
-            style={{
-              display: 'none',
-              background: 'none',
-              border: 'none',
-              color: '#FFFFFF',
-              cursor: 'pointer',
-              fontSize: '24px',
-              padding: '8px'
-            }}
-            className="mobile-toggle"
-            onClick={toggleMobileMenu}
-          >
-            {isMobileMenuOpen ? (
-              <svg style={{ width: '24px', height: '24px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg style={{ width: '24px', height: '24px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {isMobileMenuOpen && (
         <div
           style={{
-            backgroundColor: '#3a4419',
-            padding: '16px',
+            maxWidth: '1280px',
+            margin: '0 auto',
             display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-            animation: 'slideIn 0.3s ease'
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}
-          className="mobile-menu"
         >
-          {Object.entries(navItems).map(([key, item]) => (
-            <div key={key} style={{ display: 'flex', flexDirection: 'column' }}>
-              {item.subItems ? (
-                <>
-                  <button
-                    style={{
-                      color: '#FFFFFF',
-                      background: 'none',
-                      border: 'none',
-                      fontSize: '16px',
-                      padding: '12px 14px',
-                      textAlign: 'left',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      borderRadius: '6px',
-                      cursor: 'pointer'
-                    }}
-                    onClick={() => toggleDropdown(key)}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    {item.text}
-                    <svg
-                      style={{
-                        width: '16px',
-                        height: '16px',
-                        transition: 'transform 0.3s ease',
-                        transform: activeDropdown === key ? 'rotate(180deg)' : 'rotate(0deg)'
-                      }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  {activeDropdown === key && (
-                    <div
-                      style={{
-                        paddingLeft: '16px',
-                        marginTop: '4px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '4px'
-                      }}
-                    >
-                      {renderDropdownItems(item.subItems)}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <Link
-                  href={item.href}
-                  style={{
-                    color: '#FFFFFF',
-                    textDecoration: 'none',
-                    fontSize: '16px',
-                    padding: '12px 14px',
-                    borderRadius: '6px'
-                  }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                >
-                  {item.text}
-                </Link>
-              )}
-            </div>
-          ))}
-          <a
-            href="/login"
-            style={{
-              color: '#1F2937',
-              backgroundColor: '#D4A017',
-              padding: '12px 14px',
+          {/* Logo */}
+          <Link 
+            href="/" 
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center',
               textDecoration: 'none',
-              fontSize: '16px',
-              fontWeight: '600',
-              borderRadius: '6px',
-              textAlign: 'center',
-              transition: 'all 0.3s ease'
+              zIndex: 1001
             }}
-            onClick={() => setIsMobileMenuOpen(false)}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#b58900'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#D4A017'}
+            onClick={closeMenu}
           >
-            E-Portal Login
-          </a>
+            <img
+              src="/images/sanniville-logo.png"
+              alt="Sanniville Academy Logo"
+              style={{
+                height: isMobile ? '40px' : '50px',
+                width: 'auto',
+                objectFit: 'contain'
+              }}
+            />
+          </Link>
+
+          {/* Desktop Navigation - Only show when not mobile */}
+          {!isMobile && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {navItems.map((item, index) => (
+                <div key={index} style={{ position: 'relative' }}>
+                  {item.dropdown ? (
+                    <div style={{ position: 'relative' }}>
+                      <button
+                        onClick={() => toggleDropdown(item.name)}
+                        style={{
+                          backgroundColor: 'transparent',
+                          border: 'none',
+                          color: '#FFFFFF',
+                          padding: '20px 16px',
+                          fontSize: '16px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          transition: 'color 0.3s ease'
+                        }}
+                        onMouseEnter={() => setActiveDropdown(item.name)}
+                        onMouseLeave={() => setActiveDropdown(null)}
+                      >
+                        {item.name}
+                        <FiChevronDown style={{
+                          transform: activeDropdown === item.name ? 'rotate(180deg)' : 'rotate(0)',
+                          transition: 'transform 0.3s ease'
+                        }} />
+                      </button>
+                      {activeDropdown === item.name && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: '0',
+                            backgroundColor: '#FFFFFF',
+                            minWidth: '200px',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                            padding: '16px 0',
+                            zIndex: 1000
+                          }}
+                          onMouseEnter={() => setActiveDropdown(item.name)}
+                          onMouseLeave={() => setActiveDropdown(null)}
+                        >
+                          {item.dropdown.map((dropdownItem, idx) => (
+                            <Link
+                              key={idx}
+                              href={dropdownItem.href}
+                              style={{
+                                display: 'block',
+                                padding: '12px 24px',
+                                color: '#1F2937',
+                                textDecoration: 'none',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                transition: 'background-color 0.3s ease'
+                              }}
+                              onMouseEnter={(e) => e.target.style.backgroundColor = '#F9FAFB'}
+                              onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                            >
+                              {dropdownItem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      style={{
+                        color: '#FFFFFF',
+                        padding: '20px 16px',
+                        textDecoration: 'none',
+                        fontSize: '16px',
+                        fontWeight: item.highlight ? '700' : '600',
+                        display: 'block',
+                        transition: 'color 0.3s ease',
+                        backgroundColor: item.highlight ? '#D4A017' : 'transparent',
+                        borderRadius: item.highlight ? '6px' : '0',
+                        margin: item.highlight ? '0 8px' : '0'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!item.highlight) e.target.style.color = '#D4A017';
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!item.highlight) e.target.style.color = '#FFFFFF';
+                      }}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Mobile Menu Button - Only show on mobile */}
+          {isMobile && (
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              style={{
+                backgroundColor: 'transparent',
+                border: 'none',
+                color: '#FFFFFF',
+                fontSize: '24px',
+                cursor: 'pointer',
+                padding: '8px',
+                zIndex: 1001
+              }}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <FiX /> : <FiMenu />}
+            </button>
+          )}
         </div>
+
+        {/* Mobile Navigation - Only show when isMobile and isOpen */}
+        {isMobile && isOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '72px',
+              left: '0',
+              right: '0',
+              backgroundColor: '#4B5320',
+              padding: '16px',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+              zIndex: 999
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {navItems.map((item, index) => (
+                <div key={index}>
+                  {item.dropdown ? (
+                    <div>
+                      <button
+                        onClick={() => toggleDropdown(item.name)}
+                        style={{
+                          backgroundColor: 'transparent',
+                          border: 'none',
+                          color: '#FFFFFF',
+                          padding: '16px',
+                          fontSize: '16px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          width: '100%',
+                          textAlign: 'left'
+                        }}
+                      >
+                        {item.name}
+                        <FiChevronDown style={{
+                          transform: activeDropdown === item.name ? 'rotate(180deg)' : 'rotate(0)',
+                          transition: 'transform 0.3s ease'
+                        }} />
+                      </button>
+                      {activeDropdown === item.name && (
+                        <div style={{ paddingLeft: '24px' }}>
+                          {item.dropdown.map((dropdownItem, idx) => (
+                            <Link
+                              key={idx}
+                              href={dropdownItem.href}
+                              style={{
+                                display: 'block',
+                                padding: '12px 16px',
+                                color: '#FFFFFF',
+                                textDecoration: 'none',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                borderLeft: '2px solid #D4A017'
+                              }}
+                              onClick={closeMenu}
+                            >
+                              {dropdownItem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      style={{
+                        color: '#FFFFFF',
+                        padding: '16px',
+                        textDecoration: 'none',
+                        fontSize: '16px',
+                        fontWeight: item.highlight ? '700' : '600',
+                        display: 'block',
+                        backgroundColor: item.highlight ? '#D4A017' : 'transparent',
+                        borderRadius: item.highlight ? '6px' : '0',
+                        margin: item.highlight ? '8px 0' : '0'
+                      }}
+                      onClick={closeMenu}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Overlay for mobile menu - Only show when isMobile and isOpen */}
+      {isMobile && isOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '72px',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            zIndex: 998
+          }}
+          onClick={closeMenu}
+        />
       )}
 
-      <style jsx>{`
-        @media (max-width: 1024px) {
-          .desktop-nav {
-            display: none;
-          }
-          .mobile-toggle {
-            display: block;
-          }
-        }
-        @media (min-width: 1025px) {
-          .mobile-menu {
-            display: none;
-          }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateY(-15px); }
-          to { opacity: 1; transform: translateY(0); }
+      <style jsx global>{`
+        /* Ensure proper font loading */
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+        
+        /* Prevent body scrolling when menu is open */
+        body.no-scroll {
+          overflow: hidden;
         }
       `}</style>
-    </nav>
+    </>
   );
 };
 
